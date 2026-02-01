@@ -6,7 +6,7 @@ import Foundation
 import UIKit
 
 enum MessageBuilder {
-    static func build(_ event: TelegramReporterEvent) -> String {
+    static func build(_ event: TelegramReporterEvent, additional: String) -> String {
         switch event {
         case .firstLaunch:
             return """
@@ -57,7 +57,7 @@ let buildType = Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxRec
 #endif
         
         return """
-        Name: \(appName)
+        Name: \(appName) \(additional)
         Version: v\(version) (#\(build))
         Device: \(system) • \(idiom)
         Region: \(countryName)
