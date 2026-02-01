@@ -11,13 +11,13 @@ enum MessageBuilder {
         case .firstLaunch:
             return """
                 ✅ First launch
-                \(commonMeta)
+                \(commonMeta(additional: additional))
                 """
             
         case .appDidBecomeActive:
             return """
                 ▶️ App active
-                \(commonMeta)
+                \(commonMeta(additional: additional))
                 """
             
         case .custom(let title, let details):
@@ -28,13 +28,13 @@ enum MessageBuilder {
             
             return """
                 🧩 \(title)
-                \(commonMeta)
+                \(commonMeta(additional: additional))
                 \(detailsText.isEmpty ? "" : "\n" + detailsText)
                 """
         }
     }
     
-    private static var commonMeta: String {
+    private static func commonMeta(additional: String) -> String {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?"
         let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "?"
         let system = "\(UIDevice.current.systemName) \(UIDevice.current.systemVersion)"
