@@ -10,7 +10,7 @@ struct Config {
     let additional: String
 
     static func load(token: String, chatID: String, additional: String) throws -> Config {
-        Config(token: token, chatID: token, additional: additional)
+        Config(token: token, chatID: chatID, additional: additional)
     }
     
     enum ConfigError: Error {

@@ -1,0 +1,47 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "PackageStructure": ["<PackageStructure>"]
+  "TelegramReporter-arm64-apple-macosx26.0-debug.module": ["<TelegramReporter-arm64-apple-macosx26.0-debug.module>"]
+  "main": ["<TelegramReporter-arm64-apple-macosx26.0-debug.module>"]
+  "test": ["<TelegramReporter-arm64-apple-macosx26.0-debug.module>"]
+default: "main"
+nodes:
+  "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+commands:
+  "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Config.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/AccountInstallIdentity.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/InstallEvent.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/KeychainStore.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/MessageBuilder.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporter.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporterEvent.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Transport.swift"]
+    outputs: ["/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/sources"]
+    description: "Write auxiliary file /Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/sources"
+
+  "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"]
+    outputs: ["/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+
+  "<TelegramReporter-arm64-apple-macosx26.0-debug.module>":
+    tool: phony
+    inputs: ["/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Config.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/AccountInstallIdentity.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/InstallEvent.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/KeychainStore.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/MessageBuilder.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramReporter.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramReporterEvent.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Transport.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/Modules/TelegramReporter.swiftmodule"]
+    outputs: ["<TelegramReporter-arm64-apple-macosx26.0-debug.module>"]
+
+  "C.TelegramReporter-arm64-apple-macosx26.0-debug.module":
+    tool: shell
+    inputs: ["/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Config.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/AccountInstallIdentity.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/InstallEvent.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/KeychainStore.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/MessageBuilder.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporter.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporterEvent.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Transport.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/sources"]
+    outputs: ["/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Config.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/AccountInstallIdentity.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/InstallEvent.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/KeychainStore.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/MessageBuilder.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramReporter.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramReporterEvent.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Transport.swift.o","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/Modules/TelegramReporter.swiftmodule"]
+    description: "Compiling Swift Module 'TelegramReporter' (8 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","TelegramReporter","-emit-dependencies","-emit-module","-emit-module-path","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/Modules/TelegramReporter.swiftmodule","-output-file-map","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/output-file-map.json","-parse-as-library","-incremental","-c","@/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/sources","-I","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx10.13","-incremental","-enable-batch-mode","-serialize-diagnostics","-index-store-path","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j8","-DSWIFT_PACKAGE","-DDEBUG","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-emit-objc-header","-emit-objc-header-path","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/include/TelegramReporter-Swift.h","-swift-version","5","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","ios_telegram_bot_logger"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Package.swift","/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+

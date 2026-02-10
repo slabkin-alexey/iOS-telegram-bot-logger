@@ -1,0 +1,3 @@
+module TelegramReporter {
+    header "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/include/TelegramReporter-Swift.h"
+}
