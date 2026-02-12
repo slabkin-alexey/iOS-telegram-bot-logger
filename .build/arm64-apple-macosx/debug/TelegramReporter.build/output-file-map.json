@@ -9,19 +9,26 @@
     "swift-dependencies": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Config.swiftdeps",
     "diagnostics": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Config.dia"
   },
+  "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/DeviceModelCatalog.swift": {
+    "dependencies": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/DeviceModelCatalog.d",
+    "object": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/DeviceModelCatalog.swift.o",
+    "swiftmodule": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/DeviceModelCatalog~partial.swiftmodule",
+    "swift-dependencies": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/DeviceModelCatalog.swiftdeps",
+    "diagnostics": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/DeviceModelCatalog.dia"
+  },
+  "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/DeviceModelResolver.swift": {
+    "dependencies": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/DeviceModelResolver.d",
+    "object": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/DeviceModelResolver.swift.o",
+    "swiftmodule": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/DeviceModelResolver~partial.swiftmodule",
+    "swift-dependencies": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/DeviceModelResolver.swiftdeps",
+    "diagnostics": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/DeviceModelResolver.dia"
+  },
   "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/AccountInstallIdentity.swift": {
     "dependencies": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/AccountInstallIdentity.d",
     "object": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/AccountInstallIdentity.swift.o",
     "swiftmodule": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/AccountInstallIdentity~partial.swiftmodule",
     "swift-dependencies": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/AccountInstallIdentity.swiftdeps",
     "diagnostics": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/AccountInstallIdentity.dia"
-  },
-  "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/InstallEvent.swift": {
-    "dependencies": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/InstallEvent.d",
-    "object": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/InstallEvent.swift.o",
-    "swiftmodule": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/InstallEvent~partial.swiftmodule",
-    "swift-dependencies": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/InstallEvent.swiftdeps",
-    "diagnostics": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/InstallEvent.dia"
   },
   "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/KeychainStore.swift": {
     "dependencies": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/KeychainStore.d",

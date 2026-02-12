@@ -5,6 +5,7 @@
 import Foundation
 
 public enum TelegramReporter {
+    /// Sends first-launch report once per iCloud-synchronized account.
     public static func startLogReport(
         token: String,
         chatID: String,
@@ -27,7 +28,7 @@ public enum TelegramReporter {
 
     static func report(_ event: TelegramReporterEvent, token: String, chatID: String, additional: String) async {
         do {
-            let cfg = Config.load(token: token, chatID: chatID, additional: additional)
+            let cfg = Config(token: token, chatID: chatID)
             let message = MessageBuilder.build(event, additional: additional)
             try await Transport.send(message, using: cfg)
         } catch {

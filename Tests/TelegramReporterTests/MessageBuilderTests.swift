@@ -1,0 +1,81 @@
+import XCTest
+@testable import TelegramReporter
+
+final class MessageBuilderTests: XCTestCase {
+    func testFirstLaunchIncludesHeaderAndHashtag() {
+        let message = MessageBuilder.build(.firstLaunch, additional: "QA")
+
+        XCTAssertTrue(message.contains("✅ First Launch"))
+        XCTAssertTrue(message.contains("📱 App:"))
+        XCTAssertTrue(message.contains(" • QA"))
+        XCTAssertTrue(message.contains("\n\n#"))
+    }
+
+    func testCustomEventSortsAndNormalizesDetails() {
+        let event = TelegramReporterEvent.custom(
+            title: "Sync Failed",
+            details: [
+                "zeta": "line1\nline2",
+                "alpha": " ok "
+            ]
+        )
+
+        let message = MessageBuilder.build(event, additional: "")
+
+        XCTAssertTrue(message.contains("🧩 Sync Failed"))
+        XCTAssertTrue(message.contains("📋 Details:"))
+        XCTAssertTrue(message.contains("• alpha: ok"))
+        XCTAssertTrue(message.contains("• zeta: line1 line2"))
+
+        let alphaIndex = message.range(of: "• alpha: ok")?.lowerBound
+        let zetaIndex = message.range(of: "• zeta: line1 line2")?.lowerBound
+        XCTAssertNotNil(alphaIndex)
+        XCTAssertNotNil(zetaIndex)
+        if let alphaIndex, let zetaIndex {
+            XCTAssertLessThan(alphaIndex, zetaIndex)
+        }
+    }
+
+    func testCustomEventWithoutDetailsOmitsDetailsSection() {
+        let message = MessageBuilder.build(.custom(title: "Ping"), additional: "")
+
+        XCTAssertTrue(message.contains("🧩 Ping"))
+        XCTAssertFalse(message.contains("📋 Details:"))
+    }
+
+    func testAppHashtagIsStableAndDerivedFromAppName() throws {
+        let message = MessageBuilder.build(.firstLaunch, additional: "")
+
+        let lines = message.split(separator: "\n").map(String.init)
+        guard let appLine = lines.first(where: { $0.hasPrefix("📱 App: ") }) else {
+            return XCTFail("Missing app line")
+        }
+        guard let hashtagLine = lines.last(where: { $0.hasPrefix("#") }) else {
+            return XCTFail("Missing hashtag line")
+        }
+
+        let appName = String(appLine.dropFirst("📱 App: ".count))
+        let expected = normalizedHashtag(from: appName)
+        XCTAssertEqual(hashtagLine, "#\(expected)")
+    }
+
+    func testLocaleAndRegionMetadataHaveExpectedFormat() throws {
+        let message = MessageBuilder.build(.firstLaunch, additional: "")
+
+        let localePattern = #"\n🌍 Locale: .+\n"#
+        XCTAssertNotNil(message.range(of: localePattern, options: .regularExpression))
+
+        let regionPattern = #"\n🗺️ Region: .+ \((Unknown|[A-Za-z]{2,3})\)\n"#
+        XCTAssertNotNil(message.range(of: regionPattern, options: .regularExpression))
+    }
+
+    private func normalizedHashtag(from appName: String) -> String {
+        let words = appName
+            .lowercased()
+            .components(separatedBy: CharacterSet.alphanumerics.inverted)
+            .filter { !$0.isEmpty }
+            .joined()
+
+        return words.isEmpty ? "unknownapp" : words
+    }
+}

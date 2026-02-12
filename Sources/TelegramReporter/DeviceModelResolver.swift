@@ -19,7 +19,7 @@ enum DeviceModelResolver {
         return hardwareIdentifier
     }
 
-    private static var hardwareIdentifier: String = {
+    private static let hardwareIdentifier: String = {
         var systemInfo = utsname()
         uname(&systemInfo)
 

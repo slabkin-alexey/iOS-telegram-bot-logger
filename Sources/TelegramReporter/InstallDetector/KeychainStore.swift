@@ -6,7 +6,7 @@ import Foundation
 import Security
 
 enum KeychainStore {
-    private static func secBool(_ value: Bool) -> CFBoolean {
+    private static func secBoolean(_ value: Bool) -> CFBoolean {
         value ? kCFBooleanTrue : kCFBooleanFalse
     }
 
@@ -15,7 +15,7 @@ enum KeychainStore {
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
             kSecAttrAccount as String: account,
-            kSecAttrSynchronizable as String: secBool(synchronizable),
+            kSecAttrSynchronizable as String: secBoolean(synchronizable),
             kSecReturnData as String: true,
             kSecMatchLimit as String: kSecMatchLimitOne
         ]
@@ -34,7 +34,7 @@ enum KeychainStore {
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
             kSecAttrAccount as String: account,
-            kSecAttrSynchronizable as String: secBool(synchronizable)
+            kSecAttrSynchronizable as String: secBoolean(synchronizable)
         ]
 
         let attributes: [String: Any] = [

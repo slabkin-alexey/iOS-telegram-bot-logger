@@ -1,6 +1,7 @@
 '/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Config.swift'
+'/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/DeviceModelCatalog.swift'
+'/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/DeviceModelResolver.swift'
 '/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/AccountInstallIdentity.swift'
-'/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/InstallEvent.swift'
 '/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/KeychainStore.swift'
 '/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/MessageBuilder.swift'
 '/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporter.swift'
