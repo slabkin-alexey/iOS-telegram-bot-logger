@@ -9,25 +9,25 @@ enum MessageBuilder {
     static func build(_ event: TelegramReporterEvent, additional: String) -> String {
         switch event {
         case .firstLaunch:
-            return """
+            return withAppTag("""
                 ✅ First Launch
                 \(commonMeta(additional: additional))
-                """
+                """)
             
         case .appDidBecomeActive:
-            return """
+            return withAppTag("""
                 ▶️ App Became Active
                 \(commonMeta(additional: additional))
-                """
+                """)
             
         case .custom(let title, let details):
             let detailsText = formatDetails(details)
             
-            return """
+            return withAppTag("""
                 🧩 \(title)
                 \(commonMeta(additional: additional))
                 \(detailsText.isEmpty ? "" : "\n📋 Details:\n" + detailsText)
-                """
+                """)
         }
     }
     
@@ -141,5 +141,19 @@ enum MessageBuilder {
                 return "• \(key): \(normalizedValue)"
             }
             .joined(separator: "\n")
+    }
+
+    private static func withAppTag(_ message: String) -> String {
+        "\(message)\n\n#\(appHashtag)"
+    }
+
+    private static var appHashtag: String {
+        let words = appName
+            .lowercased()
+            .components(separatedBy: CharacterSet.alphanumerics.inverted)
+            .filter { !$0.isEmpty }
+            .joined()
+
+        return words.isEmpty ? "unknownapp" : words
     }
 }
