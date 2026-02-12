@@ -10,26 +10,23 @@ enum MessageBuilder {
         switch event {
         case .firstLaunch:
             return """
-                ✅ First launch
+                ✅ First Launch
                 \(commonMeta(additional: additional))
                 """
             
         case .appDidBecomeActive:
             return """
-                ▶️ App active
+                ▶️ App Became Active
                 \(commonMeta(additional: additional))
                 """
             
         case .custom(let title, let details):
-            let detailsText = details
-                .sorted(by: { $0.key < $1.key })
-                .map { "• \($0.key): \($0.value)" }
-                .joined(separator: "\n")
+            let detailsText = formatDetails(details)
             
             return """
                 🧩 \(title)
                 \(commonMeta(additional: additional))
-                \(detailsText.isEmpty ? "" : "\n" + detailsText)
+                \(detailsText.isEmpty ? "" : "\n📋 Details:\n" + detailsText)
                 """
         }
     }
@@ -38,31 +35,27 @@ enum MessageBuilder {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?"
         let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "?"
         let system = "\(UIDevice.current.systemName) \(UIDevice.current.systemVersion)"
-        let englishLocale = Locale(identifier: "en_US")
-
-        var regionCode = ""
-        if let identifier = Locale.current.region?.identifier {
-            regionCode = identifier
-        }
-        
-        var countryName = ""
-        if let localizedCountryName = englishLocale.localizedString(forRegionCode: (regionCode)) {
-            countryName = localizedCountryName
-        }
-        
+        let regionCode = Locale.current.region?.identifier ?? "Unknown"
+        let countryName = Locale(identifier: "en_US").localizedString(forRegionCode: regionCode) ?? "Unknown"
+        let preferredLanguage = Locale.preferredLanguages.first ?? "Unknown"
+        let languageCode = preferredLanguage.split(separator: "-").first.map(String.init) ?? "Unknown"
+        let localeName = Locale(identifier: "en_US").localizedString(forLanguageCode: languageCode) ?? "Unknown"
+        let displayNameSuffix = additional.trimmingCharacters(in: .whitespacesAndNewlines)
 #if DEBUG
-let buildType = "Xcode"
+        let buildType = "Xcode"
 #else
-let buildType = Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt" ? "TestFlight" : "AppStore"
+        let buildType = Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt" ? "TestFlight" : "AppStore"
 #endif
-        
-        return """
-        Name: \(appName) \(additional)
-        Version: v\(version) (#\(build))
-        Device: \(system) • \(idiom)
-        Region: \(countryName)
-        Source: \(buildType)
-        """
+
+        return [
+            "📱 App: \(appName)\(displayNameSuffix.isEmpty ? "" : " • \(displayNameSuffix)")",
+            "📦 Version: \(version) (\(build))",
+            "🚚 Source: \(buildType)",
+            "📲 Device: \(idiom) • \(deviceModelName)",
+            "🧠 OS: \(system)",
+            "🌍 Locale: \(localeName)",
+            "🗺️ Region: \(countryName) (\(regionCode))"
+        ].joined(separator: "\n")
     }
     
     private static var idiom: String = {
@@ -90,12 +83,63 @@ let buildType = Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxRec
         return "Unknown App"
     }
     
-    private static func readableCountryName(
-        regionCode: String?,
-        locale: Locale = .current
-    ) -> String? {
-        guard let regionCode else { return nil }
-        
-        return locale.localizedString(forRegionCode: regionCode)
+    private static var deviceModelIdentifier: String = {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        return withUnsafePointer(to: &systemInfo.machine) {
+            $0.withMemoryRebound(to: CChar.self, capacity: 1) {
+                String(cString: $0)
+            }
+        }
+    }()
+
+    private static var deviceModelName: String {
+        let identifier = deviceModelIdentifier
+        return knownDeviceNames[identifier] ?? identifier
+    }
+
+    private static let knownDeviceNames: [String: String] = [
+        "iPhone16,1": "iPhone 15 Pro",
+        "iPhone16,2": "iPhone 15 Pro Max",
+        "iPhone15,4": "iPhone 15",
+        "iPhone15,5": "iPhone 15 Plus",
+        "iPhone17,1": "iPhone 16 Pro",
+        "iPhone17,2": "iPhone 16 Pro Max",
+        "iPhone17,3": "iPhone 16",
+        "iPhone17,4": "iPhone 16 Plus",
+        "iPhone17,5": "iPhone 16e",
+
+        "iPad14,8": "iPad Air 11-inch (M2)",
+        "iPad14,9": "iPad Air 11-inch (M2)",
+        "iPad14,10": "iPad Air 13-inch (M2)",
+        "iPad14,11": "iPad Air 13-inch (M2)",
+        "iPad16,3": "iPad Pro 11-inch (M4)",
+        "iPad16,4": "iPad Pro 11-inch (M4)",
+        "iPad16,5": "iPad Pro 13-inch (M4)",
+        "iPad16,6": "iPad Pro 13-inch (M4)",
+        "iPad13,18": "iPad (10th generation)",
+        "iPad13,19": "iPad (10th generation)",
+        "iPad14,1": "iPad mini (6th generation)",
+        "iPad14,2": "iPad mini (6th generation)",
+
+        "Mac14,2": "MacBook Air (M2)",
+        "Mac14,3": "Mac mini (M2)",
+        "Mac14,5": "MacBook Pro 14-inch (M2 Pro/Max)",
+        "Mac14,6": "MacBook Pro 16-inch (M2 Pro/Max)",
+        "Mac15,3": "MacBook Air (M3)",
+        "Mac15,6": "MacBook Pro 14-inch (M3 Pro/Max)",
+        "Mac15,8": "MacBook Pro 16-inch (M3 Pro/Max)"
+    ]
+    
+    private static func formatDetails(_ details: [String: String]) -> String {
+        details
+            .sorted(by: { $0.key < $1.key })
+            .map { key, value in
+                let normalizedValue = value
+                    .replacingOccurrences(of: "\n", with: " ")
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                return "• \(key): \(normalizedValue)"
+            }
+            .joined(separator: "\n")
     }
 }
