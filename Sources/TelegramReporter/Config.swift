@@ -9,12 +9,7 @@ struct Config {
     let chatID: String
     let additional: String
 
-    static func load(token: String, chatID: String, additional: String) throws -> Config {
+    static func load(token: String, chatID: String, additional: String) -> Config {
         Config(token: token, chatID: chatID, additional: additional)
-    }
-    
-    enum ConfigError: Error {
-        case missingKeys
-        case disabledInRelease
     }
 }

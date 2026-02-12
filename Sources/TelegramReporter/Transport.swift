@@ -5,6 +5,20 @@
 import Foundation
 
 enum Transport {
+    private static let sendMessageEndpoint = "https://api.telegram.org/bot%@/sendMessage"
+
+    private struct SendMessagePayload: Encodable {
+        let chatID: String
+        let text: String
+        let disableWebPagePreview: Bool
+
+        enum CodingKeys: String, CodingKey {
+            case chatID = "chat_id"
+            case text
+            case disableWebPagePreview = "disable_web_page_preview"
+        }
+    }
+
     enum TransportError: LocalizedError {
         case invalidResponse
         case serverError(statusCode: Int, body: String)
@@ -20,20 +34,18 @@ enum Transport {
     }
 
     static func send(_ text: String, using cfg: Config) async throws {
-        let url = URL(string: "https://api.telegram.org/bot\(cfg.token)/sendMessage")!
-        
+        let url = URL(string: String(format: sendMessageEndpoint, cfg.token))!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let payload: [String: Any] = [
-            "chat_id": cfg.chatID,
-            "text": text,
-            "disable_web_page_preview": true
-        ]
-        
-        request.httpBody = try JSONSerialization.data(withJSONObject: payload)
-        
+
+        let payload = SendMessagePayload(
+            chatID: cfg.chatID,
+            text: text,
+            disableWebPagePreview: true
+        )
+        request.httpBody = try JSONEncoder().encode(payload)
+
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let http = response as? HTTPURLResponse else {
             throw TransportError.invalidResponse

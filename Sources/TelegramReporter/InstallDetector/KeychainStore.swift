@@ -6,12 +6,16 @@ import Foundation
 import Security
 
 enum KeychainStore {
+    private static func secBool(_ value: Bool) -> CFBoolean {
+        value ? kCFBooleanTrue : kCFBooleanFalse
+    }
+
     static func read(service: String, account: String, synchronizable: Bool) -> Data? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
             kSecAttrAccount as String: account,
-            kSecAttrSynchronizable as String: synchronizable ? kCFBooleanTrue! : kCFBooleanFalse!,
+            kSecAttrSynchronizable as String: secBool(synchronizable),
             kSecReturnData as String: true,
             kSecMatchLimit as String: kSecMatchLimitOne
         ]
@@ -30,7 +34,7 @@ enum KeychainStore {
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
             kSecAttrAccount as String: account,
-            kSecAttrSynchronizable as String: synchronizable ? kCFBooleanTrue! : kCFBooleanFalse!
+            kSecAttrSynchronizable as String: secBool(synchronizable)
         ]
 
         let attributes: [String: Any] = [
