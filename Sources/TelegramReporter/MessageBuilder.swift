@@ -100,7 +100,7 @@ enum MessageBuilder {
 #endif
     }
 
-    private static var idiom: String = {
+    private static var idiom: String {
 #if canImport(UIKit)
         switch UIDevice.current.userInterfaceIdiom {
         case .phone: return "iPhone"
@@ -113,7 +113,7 @@ enum MessageBuilder {
 #else
         return "Unknown"
 #endif
-    }()
+    }
 
     private static var appName: String {
         let info = Bundle.main.infoDictionary

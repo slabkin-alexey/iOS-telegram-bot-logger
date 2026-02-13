@@ -43,6 +43,35 @@ final class MessageBuilderTests: XCTestCase {
         XCTAssertFalse(message.contains("📋 Details:"))
     }
 
+    func testAppDidBecomeActiveIncludesExpectedHeader() {
+        let message = MessageBuilder.build(.appDidBecomeActive, additional: "")
+
+        XCTAssertTrue(message.contains("▶️ App Became Active"))
+    }
+
+    func testAdditionalWhitespaceIsTrimmedInAppLine() throws {
+        let message = MessageBuilder.build(.firstLaunch, additional: "   QA Team  ")
+
+        let lines = message.split(separator: "\n").map(String.init)
+        guard let appLine = lines.first(where: { $0.hasPrefix("📱 App: ") }) else {
+            return XCTFail("Missing app line")
+        }
+
+        XCTAssertTrue(appLine.contains(" • QA Team"))
+        XCTAssertFalse(appLine.contains("  QA Team  "))
+    }
+
+    func testBlankAdditionalIsNotRenderedInAppLine() throws {
+        let message = MessageBuilder.build(.firstLaunch, additional: "   \n\t ")
+
+        let lines = message.split(separator: "\n").map(String.init)
+        guard let appLine = lines.first(where: { $0.hasPrefix("📱 App: ") }) else {
+            return XCTFail("Missing app line")
+        }
+
+        XCTAssertFalse(appLine.contains(" • "))
+    }
+
     func testAppHashtagIsStableAndDerivedFromAppName() throws {
         let message = MessageBuilder.build(.firstLaunch, additional: "")
 
@@ -67,6 +96,15 @@ final class MessageBuilderTests: XCTestCase {
 
         let regionPattern = #"\n🗺️ Region: .+ \((Unknown|[A-Za-z]{2,3})\)\n"#
         XCTAssertNotNil(message.range(of: regionPattern, options: .regularExpression))
+    }
+
+    func testStandardMetadataSectionsArePresent() {
+        let message = MessageBuilder.build(.firstLaunch, additional: "")
+
+        XCTAssertTrue(message.contains("📦 Version: "))
+        XCTAssertTrue(message.contains("🚚 Source: "))
+        XCTAssertTrue(message.contains("📲 Device: "))
+        XCTAssertTrue(message.contains("🧠 OS: "))
     }
 
     private func normalizedHashtag(from appName: String) -> String {
