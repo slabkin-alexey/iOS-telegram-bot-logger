@@ -11,6 +11,10 @@ enum KeychainStore {
     }
 
     static func read(service: String, account: String, synchronizable: Bool) -> Data? {
+        ReporterLogger.log(
+            "KeychainStore.read",
+            "Reading keychain item for service=\(service), account=\(account), synchronizable=\(synchronizable)"
+        )
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
@@ -22,7 +26,11 @@ enum KeychainStore {
 
         var item: CFTypeRef?
         let status = SecItemCopyMatching(query as CFDictionary, &item)
-        guard status == errSecSuccess else { return nil }
+        guard status == errSecSuccess else {
+            ReporterLogger.log("KeychainStore.read", "Read failed with status=\(status)")
+            return nil
+        }
+        ReporterLogger.log("KeychainStore.read", "Read succeeded")
         return item as? Data
     }
 
@@ -30,6 +38,10 @@ enum KeychainStore {
                        service: String,
                        account: String,
                        synchronizable: Bool) throws {
+        ReporterLogger.log(
+            "KeychainStore.upsert",
+            "Upserting keychain item for service=\(service), account=\(account), synchronizable=\(synchronizable), dataLength=\(data.count)"
+        )
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
@@ -43,12 +55,20 @@ enum KeychainStore {
 
         let status = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
         if status == errSecItemNotFound {
+            ReporterLogger.log("KeychainStore.upsert", "Item not found, performing add")
             var addQuery = query
             addQuery[kSecValueData as String] = data
             let addStatus = SecItemAdd(addQuery as CFDictionary, nil)
-            guard addStatus == errSecSuccess else { throw KeychainError.osStatus(addStatus) }
+            guard addStatus == errSecSuccess else {
+                ReporterLogger.log("KeychainStore.upsert", "Add failed with status=\(addStatus)")
+                throw KeychainError.osStatus(addStatus)
+            }
+            ReporterLogger.log("KeychainStore.upsert", "Add succeeded")
         } else if status != errSecSuccess {
+            ReporterLogger.log("KeychainStore.upsert", "Update failed with status=\(status)")
             throw KeychainError.osStatus(status)
+        } else {
+            ReporterLogger.log("KeychainStore.upsert", "Update succeeded")
         }
     }
 

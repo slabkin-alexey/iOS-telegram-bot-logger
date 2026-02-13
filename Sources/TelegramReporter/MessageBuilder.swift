@@ -9,15 +9,21 @@ import UIKit
 
 enum MessageBuilder {
     static func build(_ event: TelegramReporterEvent, additional: String) -> String {
+        ReporterLogger.log(
+            "MessageBuilder.build",
+            "Building message for event=\(event.logName), additionalLength=\(additional.count)"
+        )
+
+        let message: String
         switch event {
         case .firstLaunch:
-            return withAppTag("""
+            message = withAppTag("""
                 ✅ First Launch
                 \(commonMeta(additional: additional))
                 """)
 
         case .appDidBecomeActive:
-            return withAppTag("""
+            message = withAppTag("""
                 ▶️ App Became Active
                 \(commonMeta(additional: additional))
                 """)
@@ -25,12 +31,15 @@ enum MessageBuilder {
         case .custom(let title, let details):
             let detailsText = formatDetails(details)
 
-            return withAppTag("""
+            message = withAppTag("""
                 🧩 \(title)
                 \(commonMeta(additional: additional))
                 \(detailsText.isEmpty ? "" : "\n📋 Details:\n" + detailsText)
                 """)
         }
+
+        ReporterLogger.log("MessageBuilder.build", "Message built, finalLength=\(message.count)")
+        return message
     }
 
     private static func commonMeta(additional: String) -> String {
@@ -143,7 +152,8 @@ enum MessageBuilder {
     }
 
     private static func formatDetails(_ details: [String: String]) -> String {
-        details
+        ReporterLogger.log("MessageBuilder.formatDetails", "Formatting details, count=\(details.count)")
+        return details
             .sorted(by: { $0.key < $1.key })
             .map { key, value in
                 let normalizedValue = value

@@ -44,6 +44,13 @@
     "swift-dependencies": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/MessageBuilder.swiftdeps",
     "diagnostics": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/MessageBuilder.dia"
   },
+  "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/ReporterLogger.swift": {
+    "dependencies": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/ReporterLogger.d",
+    "object": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/ReporterLogger.swift.o",
+    "swiftmodule": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/ReporterLogger~partial.swiftmodule",
+    "swift-dependencies": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/ReporterLogger.swiftdeps",
+    "diagnostics": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/ReporterLogger.dia"
+  },
   "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporter.swift": {
     "dependencies": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramReporter.d",
     "object": "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramReporter.swift.o",

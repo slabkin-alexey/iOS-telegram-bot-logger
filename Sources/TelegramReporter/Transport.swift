@@ -34,6 +34,7 @@ enum Transport {
     }
 
     static func send(_ text: String, using cfg: Config) async throws {
+        ReporterLogger.log("Transport.send", "Creating request for chatID=\(cfg.chatID), textLength=\(text.count)")
         let url = URL(string: String(format: sendMessageEndpoint, cfg.token))!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -45,15 +46,20 @@ enum Transport {
             disableWebPagePreview: true
         )
         request.httpBody = try JSONEncoder().encode(payload)
+        ReporterLogger.log("Transport.send", "Request payload encoded, bodyLength=\(request.httpBody?.count ?? 0)")
 
         let (data, response) = try await URLSession.shared.data(for: request)
+        ReporterLogger.log("Transport.send", "Response received, bodyLength=\(data.count)")
         guard let http = response as? HTTPURLResponse else {
+            ReporterLogger.log("Transport.send", "Invalid non-HTTP response")
             throw TransportError.invalidResponse
         }
 
         guard (200..<300).contains(http.statusCode) else {
             let body = String(data: data, encoding: .utf8) ?? "No response body"
+            ReporterLogger.log("Transport.send", "Server error status=\(http.statusCode), body=\(body)")
             throw TransportError.serverError(statusCode: http.statusCode, body: body)
         }
+        ReporterLogger.log("Transport.send", "Message delivered successfully with status=\(http.statusCode)")
     }
 }

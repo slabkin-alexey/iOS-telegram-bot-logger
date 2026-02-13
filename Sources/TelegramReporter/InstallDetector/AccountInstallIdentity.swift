@@ -17,14 +17,18 @@ enum AccountInstallIdentity {
         },
         makeID: () -> String = { UUID().uuidString }
     ) throws -> (id: String, isFirstForAccount: Bool) {
+        ReporterLogger.log("AccountInstallIdentity.getOrCreate", "Attempting to read account install identity")
         if let data = read(service, account, true),
            let existing = String(data: data, encoding: .utf8),
            !existing.isEmpty {
+            ReporterLogger.log("AccountInstallIdentity.getOrCreate", "Using existing install identity")
             return (existing, false)
         }
 
         let newID = makeID()
+        ReporterLogger.log("AccountInstallIdentity.getOrCreate", "No valid identity found, creating a new one")
         try upsert(Data(newID.utf8), service, account, true)
+        ReporterLogger.log("AccountInstallIdentity.getOrCreate", "New install identity stored successfully")
         return (newID, true)
     }
 }

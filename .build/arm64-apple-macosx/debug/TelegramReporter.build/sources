@@ -4,6 +4,7 @@
 '/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/AccountInstallIdentity.swift'
 '/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/KeychainStore.swift'
 '/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/MessageBuilder.swift'
+'/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/ReporterLogger.swift'
 '/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporter.swift'
 '/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporterEvent.swift'
 '/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Transport.swift'
