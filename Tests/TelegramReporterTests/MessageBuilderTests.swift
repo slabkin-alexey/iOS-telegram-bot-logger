@@ -107,6 +107,57 @@ final class MessageBuilderTests: XCTestCase {
         XCTAssertTrue(message.contains("🧠 OS: "))
     }
 
+    func testAppNamePrefersDisplayName() {
+        let name = MessageBuilder.appName(from: ["CFBundleDisplayName": "Display", "CFBundleName": "BundleName"])
+        XCTAssertEqual(name, "Display")
+    }
+
+    func testAppNameFallsBackToBundleName() {
+        let name = MessageBuilder.appName(from: ["CFBundleName": "BundleName"])
+        XCTAssertEqual(name, "BundleName")
+    }
+
+    func testAppNameFallsBackToUnknownApp() {
+        XCTAssertEqual(MessageBuilder.appName(from: nil), "Unknown App")
+        XCTAssertEqual(MessageBuilder.appName(from: ["CFBundleDisplayName": "", "CFBundleName": ""]), "Unknown App")
+    }
+
+    func testCurrentRegionCodeUsesModernValueWhenAvailable() {
+        let code = MessageBuilder.currentRegionCode(
+            usesModernLocaleAPI: true,
+            modernRegionIdentifier: "US",
+            legacyRegionCode: "UA"
+        )
+        XCTAssertEqual(code, "US")
+    }
+
+    func testCurrentRegionCodeFallsBackWhenModernValueMissing() {
+        let code = MessageBuilder.currentRegionCode(
+            usesModernLocaleAPI: true,
+            modernRegionIdentifier: nil,
+            legacyRegionCode: "UA"
+        )
+        XCTAssertEqual(code, "Unknown")
+    }
+
+    func testCurrentRegionCodeUsesLegacyWhenModernAPIUnavailable() {
+        let code = MessageBuilder.currentRegionCode(
+            usesModernLocaleAPI: false,
+            modernRegionIdentifier: "US",
+            legacyRegionCode: "UA"
+        )
+        XCTAssertEqual(code, "UA")
+    }
+
+    func testCurrentRegionCodeFallsBackToUnknownWhenEverythingMissing() {
+        let code = MessageBuilder.currentRegionCode(
+            usesModernLocaleAPI: false,
+            modernRegionIdentifier: nil,
+            legacyRegionCode: nil
+        )
+        XCTAssertEqual(code, "Unknown")
+    }
+
     private func normalizedHashtag(from appName: String) -> String {
         let words = appName
             .lowercased()

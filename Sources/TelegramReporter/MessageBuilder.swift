@@ -65,10 +65,36 @@ enum MessageBuilder {
     }
 
     private static var currentRegionCode: String {
+        currentRegionCode(
+            usesModernLocaleAPI: usesModernLocaleAPI,
+            modernRegionIdentifier: usesModernLocaleAPI ? modernRegionIdentifier : nil,
+            legacyRegionCode: Locale.current.regionCode
+        )
+    }
+
+    private static var usesModernLocaleAPI: Bool {
         if #available(iOS 16.0, tvOS 16.0, macOS 13.0, *) {
-            return Locale.current.region?.identifier ?? "Unknown"
+            return true
         }
-        return Locale.current.regionCode ?? "Unknown"
+        return false
+    }
+
+    private static var modernRegionIdentifier: String? {
+        if #available(iOS 16.0, tvOS 16.0, macOS 13.0, *) {
+            return Locale.current.region?.identifier
+        }
+        return nil
+    }
+
+    static func currentRegionCode(
+        usesModernLocaleAPI: Bool,
+        modernRegionIdentifier: String?,
+        legacyRegionCode: String?
+    ) -> String {
+        if usesModernLocaleAPI {
+            return modernRegionIdentifier ?? "Unknown"
+        }
+        return legacyRegionCode ?? "Unknown"
     }
 
     private static var currentLanguageCode: String {
@@ -116,8 +142,10 @@ enum MessageBuilder {
     }
 
     private static var appName: String {
-        let info = Bundle.main.infoDictionary
+        appName(from: Bundle.main.infoDictionary)
+    }
 
+    static func appName(from info: [String: Any]?) -> String {
         if let displayName = info?["CFBundleDisplayName"] as? String, !displayName.isEmpty {
             return displayName
         }

@@ -86,6 +86,23 @@ final class TransportAndReporterTests: XCTestCase {
         }
     }
 
+    func testTransportSendUsesFallbackBodyForNonUTF8ErrorResponse() async {
+        URLProtocolStub.requestHandler = { request in
+            let response = HTTPURLResponse(url: request.url!, statusCode: 502, httpVersion: nil, headerFields: nil)!
+            return (response, Data([0xFF, 0xFE, 0xFD]))
+        }
+
+        do {
+            try await Transport.send("Hello", using: Config(token: "abc123", chatID: "42"))
+            XCTFail("Expected send to throw")
+        } catch let Transport.TransportError.serverError(statusCode, body) {
+            XCTAssertEqual(statusCode, 502)
+            XCTAssertEqual(body, "No response body")
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+    }
+
     func testTransportSendThrowsInvalidResponseForNonHTTP() async {
         URLProtocolStub.requestHandler = { request in
             let response = URLResponse(url: request.url!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
@@ -148,5 +165,68 @@ final class TransportAndReporterTests: XCTestCase {
 
         XCTAssertEqual(requestCount, 1)
         XCTAssertEqual(capturedRequest?.url?.absoluteString, "https://api.telegram.org/botabc123/sendMessage")
+    }
+
+    func testStartLogReportWithoutIgnoreDoesNotCrashAndSendsAtMostOnce() async {
+        var requestCount = 0
+
+        URLProtocolStub.requestHandler = { request in
+            requestCount += 1
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, Data())
+        }
+
+        await TelegramReporter.startLogReport(token: "abc123", chatID: "42", additional: "QA", ignoreFirstLaunch: false)
+
+        XCTAssertLessThanOrEqual(requestCount, 1)
+    }
+
+    func testStartLogReportInjectedReportsWhenFirstForAccount() async {
+        var reported = false
+        await TelegramReporter.startLogReport(
+            token: "abc123",
+            chatID: "42",
+            additional: "QA",
+            ignoreFirstLaunch: false,
+            getOrCreateInstallIdentity: { ("id-1", true) },
+            reportFirstLaunch: { token, chatID, additional in
+                reported = true
+                XCTAssertEqual(token, "abc123")
+                XCTAssertEqual(chatID, "42")
+                XCTAssertEqual(additional, "QA")
+            }
+        )
+
+        XCTAssertTrue(reported)
+    }
+
+    func testStartLogReportInjectedSkipsWhenNotFirstForAccount() async {
+        var reported = false
+        await TelegramReporter.startLogReport(
+            token: "abc123",
+            chatID: "42",
+            additional: "QA",
+            ignoreFirstLaunch: false,
+            getOrCreateInstallIdentity: { ("id-1", false) },
+            reportFirstLaunch: { _, _, _ in reported = true }
+        )
+
+        XCTAssertFalse(reported)
+    }
+
+    func testStartLogReportInjectedSwallowsIdentityError() async {
+        enum DummyError: Error { case failed }
+        var reported = false
+
+        await TelegramReporter.startLogReport(
+            token: "abc123",
+            chatID: "42",
+            additional: "QA",
+            ignoreFirstLaunch: false,
+            getOrCreateInstallIdentity: { throw DummyError.failed },
+            reportFirstLaunch: { _, _, _ in reported = true }
+        )
+
+        XCTAssertFalse(reported)
     }
 }
