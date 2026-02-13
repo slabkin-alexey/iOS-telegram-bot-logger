@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "TelegramReporter",
-    platforms: [.iOS(.v16), .tvOS(.v16), .macOS(.v12)],
+    platforms: [.iOS(.v18), .tvOS(.v18), .macOS(.v15)],
     products: [.library(name: "TelegramReporter", targets: ["TelegramReporter"])],
     targets: [
         .target(name: "TelegramReporter", path: "Sources"),

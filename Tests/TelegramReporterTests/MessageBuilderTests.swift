@@ -122,39 +122,13 @@ final class MessageBuilderTests: XCTestCase {
         XCTAssertEqual(MessageBuilder.appName(from: ["CFBundleDisplayName": "", "CFBundleName": ""]), "Unknown App")
     }
 
-    func testCurrentRegionCodeUsesModernValueWhenAvailable() {
-        let code = MessageBuilder.currentRegionCode(
-            usesModernLocaleAPI: true,
-            modernRegionIdentifier: "US",
-            legacyRegionCode: "UA"
-        )
+    func testCurrentRegionCodeUsesProvidedValue() {
+        let code = MessageBuilder.currentRegionCode(regionIdentifier: "US")
         XCTAssertEqual(code, "US")
     }
 
-    func testCurrentRegionCodeFallsBackWhenModernValueMissing() {
-        let code = MessageBuilder.currentRegionCode(
-            usesModernLocaleAPI: true,
-            modernRegionIdentifier: nil,
-            legacyRegionCode: "UA"
-        )
-        XCTAssertEqual(code, "Unknown")
-    }
-
-    func testCurrentRegionCodeUsesLegacyWhenModernAPIUnavailable() {
-        let code = MessageBuilder.currentRegionCode(
-            usesModernLocaleAPI: false,
-            modernRegionIdentifier: "US",
-            legacyRegionCode: "UA"
-        )
-        XCTAssertEqual(code, "UA")
-    }
-
-    func testCurrentRegionCodeFallsBackToUnknownWhenEverythingMissing() {
-        let code = MessageBuilder.currentRegionCode(
-            usesModernLocaleAPI: false,
-            modernRegionIdentifier: nil,
-            legacyRegionCode: nil
-        )
+    func testCurrentRegionCodeFallsBackToUnknownWhenMissing() {
+        let code = MessageBuilder.currentRegionCode(regionIdentifier: nil)
         XCTAssertEqual(code, "Unknown")
     }
 

@@ -65,36 +65,13 @@ enum MessageBuilder {
     }
 
     private static var currentRegionCode: String {
-        currentRegionCode(
-            usesModernLocaleAPI: usesModernLocaleAPI,
-            modernRegionIdentifier: usesModernLocaleAPI ? modernRegionIdentifier : nil,
-            legacyRegionCode: Locale.current.regionCode
-        )
-    }
-
-    private static var usesModernLocaleAPI: Bool {
-        if #available(iOS 16.0, tvOS 16.0, macOS 13.0, *) {
-            return true
-        }
-        return false
-    }
-
-    private static var modernRegionIdentifier: String? {
-        if #available(iOS 16.0, tvOS 16.0, macOS 13.0, *) {
-            return Locale.current.region?.identifier
-        }
-        return nil
+        currentRegionCode(regionIdentifier: Locale.current.region?.identifier)
     }
 
     static func currentRegionCode(
-        usesModernLocaleAPI: Bool,
-        modernRegionIdentifier: String?,
-        legacyRegionCode: String?
+        regionIdentifier: String?
     ) -> String {
-        if usesModernLocaleAPI {
-            return modernRegionIdentifier ?? "Unknown"
-        }
-        return legacyRegionCode ?? "Unknown"
+        regionIdentifier ?? "Unknown"
     }
 
     private static var currentLanguageCode: String {
