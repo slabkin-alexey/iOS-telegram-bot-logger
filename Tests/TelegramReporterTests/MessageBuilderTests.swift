@@ -43,6 +43,49 @@ final class MessageBuilderTests: XCTestCase {
         XCTAssertFalse(message.contains("📋 Details:"))
     }
 
+    func testFeedbackEventIncludesFeedbackLineAndCommonMetadata() {
+        let message = MessageBuilder.build(.feedback(text: "App crashed on save"), additional: "QA")
+
+        XCTAssertTrue(message.contains("📝 Feedback"))
+        XCTAssertTrue(message.contains("📱 App:"))
+        XCTAssertTrue(message.contains("📦 Version:"))
+        XCTAssertTrue(message.contains("💬 User text: App crashed on save"))
+    }
+
+    func testFeedbackEventContainsFullExpectedMetadataLayout() {
+        let message = MessageBuilder.build(.feedback(text: "Тут відбек"), additional: "🧘🏻‍♀️")
+
+        XCTAssertTrue(message.contains("📝 Feedback"))
+        XCTAssertTrue(message.contains("📱 App:"))
+        XCTAssertTrue(message.contains("• 🧘🏻‍♀️"))
+        XCTAssertTrue(message.contains("📦 Version:"))
+        XCTAssertTrue(message.contains("🚚 Source:"))
+        XCTAssertTrue(message.contains("📲 Device:"))
+        XCTAssertTrue(message.contains("🧠 OS:"))
+        XCTAssertTrue(message.contains("🌍 Locale:"))
+        XCTAssertTrue(message.contains("🗺️ Region:"))
+        XCTAssertTrue(message.contains("💬 User text: Тут відбек"))
+    }
+
+    func testFeedbackSharesSameBaseMetadataStructureAsFirstLaunch() {
+        let firstLaunch = MessageBuilder.build(.firstLaunch, additional: "QA")
+        let feedback = MessageBuilder.build(.feedback(text: "hello"), additional: "QA")
+
+        for marker in [
+            "📱 App:",
+            "📦 Version:",
+            "🚚 Source:",
+            "📲 Device:",
+            "🧠 OS:",
+            "🌍 Locale:",
+            "🗺️ Region:"
+        ] {
+            XCTAssertTrue(firstLaunch.contains(marker))
+            XCTAssertTrue(feedback.contains(marker))
+        }
+        XCTAssertTrue(feedback.contains("💬 User text: hello"))
+    }
+
     func testAppDidBecomeActiveIncludesExpectedHeader() {
         let message = MessageBuilder.build(.appDidBecomeActive, additional: "")
 

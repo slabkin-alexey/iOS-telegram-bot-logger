@@ -5,6 +5,10 @@
 import Foundation
 
 public enum TelegramReporter {
+    public enum FeedbackError: Error {
+        case emptyMessage
+    }
+
     /// Sends first-launch report once per iCloud-synchronized account.
     public static func startLogReport(
         token: String,
@@ -26,6 +30,45 @@ public enum TelegramReporter {
                 await report(.firstLaunch, token: token, chatID: chatID, additional: additional)
             }
         )
+    }
+
+    /// Sends a custom event with optional image attachment.
+    public static func sendCustomEvent(
+        token: String,
+        chatID: String,
+        title: String,
+        details: [String: String] = [:],
+        additional: String,
+        imageFileURL: URL? = nil
+    ) async {
+        let attachment = prepareImageAttachment(from: imageFileURL)
+        await report(.custom(title: title, details: details), token: token, chatID: chatID, additional: additional, attachment: attachment)
+    }
+
+    /// Sends feedback event with the same base metadata as startLogReport plus user text.
+    /// Optionally attaches an image with extension: png, heic, jpeg, jpg.
+    public static func sendFeedback(
+        token: String,
+        chatID: String,
+        additional: String,
+        text: String,
+        imageURL: URL? = nil,
+        feedbackImage: FeedbackImage? = nil,
+        imageFileURL: URL? = nil
+    ) async throws {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            ReporterLogger.log("TelegramReporter.sendFeedback", "Rejected empty feedback message")
+            throw FeedbackError.emptyMessage
+        }
+
+        ReporterLogger.log(
+            "TelegramReporter.sendFeedback",
+            "Preparing feedback event, chatID=\(chatID), textLength=\(trimmed.count), hasPickerImage=\(feedbackImage != nil), hasImageURL=\(imageURL != nil || imageFileURL != nil)"
+        )
+        let resolvedImageURL = imageURL ?? imageFileURL
+        let image = feedbackImage ?? prepareFeedbackImage(from: resolvedImageURL)
+        await report(.feedback(text: trimmed, image: image), token: token, chatID: chatID, additional: additional)
     }
 
     static func startLogReport(
@@ -56,16 +99,73 @@ public enum TelegramReporter {
         }
     }
 
-    static func report(_ event: TelegramReporterEvent, token: String, chatID: String, additional: String) async {
+    static func report(
+        _ event: TelegramReporterEvent,
+        token: String,
+        chatID: String,
+        additional: String,
+        attachment: Transport.Attachment? = nil
+    ) async {
         do {
             ReporterLogger.log("TelegramReporter.report", "Preparing event=\(event.logName), chatID=\(chatID)")
             let cfg = Config(token: token, chatID: chatID)
             let message = MessageBuilder.build(event, additional: additional)
+            let routedAttachment = attachment ?? eventAttachment(for: event)
             ReporterLogger.log("TelegramReporter.report", "Built message for event=\(event.logName), length=\(message.count)")
-            try await Transport.send(message, using: cfg)
+            try await Transport.send(message, using: cfg, attachment: routedAttachment)
             ReporterLogger.log("TelegramReporter.report", "Sent event=\(event.logName) successfully")
         } catch {
             logDebugError("TelegramReporter error", error)
+        }
+    }
+
+    private static func eventAttachment(for event: TelegramReporterEvent) -> Transport.Attachment? {
+        switch event {
+        case .feedback(_, let image):
+            guard let image else {
+                ReporterLogger.log("TelegramReporter.attachment", "Feedback event has no embedded image")
+                return nil
+            }
+            ReporterLogger.log(
+                "TelegramReporter.attachment",
+                "Using embedded feedback image, fileName=\(image.fileName), mimeType=\(image.mimeType), size=\(image.data.count)"
+            )
+            return Transport.Attachment(data: image.data, fileName: image.fileName, mimeType: image.mimeType)
+        default:
+            return nil
+        }
+    }
+
+    private static func prepareImageAttachment(from imageFileURL: URL?) -> Transport.Attachment? {
+        guard let image = prepareFeedbackImage(from: imageFileURL) else { return nil }
+        return Transport.Attachment(data: image.data, fileName: image.fileName, mimeType: image.mimeType)
+    }
+
+    private static func prepareFeedbackImage(from imageFileURL: URL?) -> FeedbackImage? {
+        guard let imageFileURL else {
+            ReporterLogger.log("TelegramReporter.attachment", "No image provided, sending message without attachment")
+            return nil
+        }
+
+        let fileExtension = imageFileURL.pathExtension.lowercased()
+        guard let mimeType = FeedbackImage.mimeType(forFileExtension: fileExtension) else {
+            ReporterLogger.log(
+                "TelegramReporter.attachment",
+                "Unsupported image format '\(fileExtension)'. Supported: png, heic, jpeg, jpg. Sending without attachment"
+            )
+            return nil
+        }
+
+        do {
+            let data = try Data(contentsOf: imageFileURL)
+            ReporterLogger.log(
+                "TelegramReporter.attachment",
+                "Loaded image attachment '\(imageFileURL.lastPathComponent)', size=\(data.count), mimeType=\(mimeType)"
+            )
+            return FeedbackImage(data: data, fileName: imageFileURL.lastPathComponent, mimeType: mimeType)
+        } catch {
+            ReporterLogger.log("TelegramReporter.attachment", "Failed to read image at \(imageFileURL.path): \(error). Sending without attachment")
+            return nil
         }
     }
 

@@ -36,6 +36,14 @@ enum MessageBuilder {
                 \(commonMeta(additional: additional))
                 \(detailsText.isEmpty ? "" : "\n📋 Details:\n" + detailsText)
                 """)
+
+        case .feedback(let text, _):
+            message = withAppTag("""
+                📝 Feedback
+                \(commonMeta(additional: additional))
+
+                💬 User text: \(text)
+                """)
         }
 
         ReporterLogger.log("MessageBuilder.build", "Message built, finalLength=\(message.count)")

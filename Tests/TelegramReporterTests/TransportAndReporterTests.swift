@@ -69,6 +69,32 @@ final class TransportAndReporterTests: XCTestCase {
         XCTAssertEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/json")
     }
 
+    func testTransportSendWithAttachmentBuildsMultipartRequestPayload() async throws {
+        var capturedRequest: URLRequest?
+
+        URLProtocolStub.requestHandler = { request in
+            capturedRequest = request
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, Data())
+        }
+
+        let attachment = Transport.Attachment(
+            data: Data("abc".utf8),
+            fileName: "image.png",
+            mimeType: "image/png"
+        )
+        try await Transport.send("Feedback body", using: Config(token: "abc123", chatID: "42"), attachment: attachment)
+
+        guard let request = capturedRequest else {
+            return XCTFail("Expected request to be captured")
+        }
+
+        XCTAssertEqual(request.url?.absoluteString, "https://api.telegram.org/botabc123/sendPhoto")
+        XCTAssertEqual(request.httpMethod, "POST")
+        XCTAssertTrue((request.value(forHTTPHeaderField: "Content-Type") ?? "").contains("multipart/form-data"))
+        XCTAssertTrue(request.httpBody != nil || request.httpBodyStream != nil)
+    }
+
     func testTransportSendThrowsServerErrorForNon2xx() async {
         URLProtocolStub.requestHandler = { request in
             let response = HTTPURLResponse(url: request.url!, statusCode: 500, httpVersion: nil, headerFields: nil)!
@@ -150,6 +176,140 @@ final class TransportAndReporterTests: XCTestCase {
         XCTAssertEqual(requestCount, 1)
     }
 
+    func testSendFeedbackWithImageUsesPhotoEndpoint() async throws {
+        var capturedRequest: URLRequest?
+        var requestCount = 0
+
+        URLProtocolStub.requestHandler = { request in
+            requestCount += 1
+            capturedRequest = request
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, Data())
+        }
+
+        let imageURL = try makeTempImageURL(ext: "jpg")
+        try await TelegramReporter.sendFeedback(
+            token: "abc123",
+            chatID: "42",
+            additional: "QA",
+            text: "Need help",
+            imageURL: imageURL
+        )
+
+        XCTAssertEqual(capturedRequest?.url?.absoluteString, "https://api.telegram.org/botabc123/sendPhoto")
+        XCTAssertEqual(requestCount, 1)
+    }
+
+    func testSendFeedbackWithoutImageUsesMessageEndpoint() async throws {
+        var capturedRequest: URLRequest?
+
+        URLProtocolStub.requestHandler = { request in
+            capturedRequest = request
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, Data())
+        }
+
+        try await TelegramReporter.sendFeedback(
+            token: "abc123",
+            chatID: "42",
+            additional: "QA",
+            text: "Need help"
+        )
+
+        XCTAssertEqual(capturedRequest?.url?.absoluteString, "https://api.telegram.org/botabc123/sendMessage")
+    }
+
+    func testSendFeedbackWithPickerImageUsesPhotoEndpoint() async throws {
+        var capturedRequest: URLRequest?
+
+        URLProtocolStub.requestHandler = { request in
+            capturedRequest = request
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, Data())
+        }
+
+        let pickerImage = FeedbackImage(
+            data: Data("picker-image".utf8),
+            fileName: "picker.heic",
+            mimeType: "image/heic"
+        )
+
+        try await TelegramReporter.sendFeedback(
+            token: "abc123",
+            chatID: "42",
+            additional: "QA",
+            text: "From picker",
+            feedbackImage: pickerImage
+        )
+
+        XCTAssertEqual(capturedRequest?.url?.absoluteString, "https://api.telegram.org/botabc123/sendPhoto")
+    }
+
+    func testReportFeedbackEventWithEmbeddedImageUsesPhotoEndpoint() async {
+        var capturedRequest: URLRequest?
+
+        URLProtocolStub.requestHandler = { request in
+            capturedRequest = request
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, Data())
+        }
+
+        let embeddedImage = FeedbackImage(
+            data: Data("embedded".utf8),
+            fileName: "embedded.png",
+            mimeType: "image/png"
+        )
+
+        await TelegramReporter.report(
+            .feedback(text: "Embedded", image: embeddedImage),
+            token: "abc123",
+            chatID: "42",
+            additional: "QA"
+        )
+
+        XCTAssertEqual(capturedRequest?.url?.absoluteString, "https://api.telegram.org/botabc123/sendPhoto")
+    }
+
+    func testSendFeedbackRejectsEmptyMessage() async {
+        do {
+            try await TelegramReporter.sendFeedback(
+                token: "abc123",
+                chatID: "42",
+                additional: "QA",
+                text: "   \n\t "
+            )
+            XCTFail("Expected empty feedback to throw")
+        } catch TelegramReporter.FeedbackError.emptyMessage {
+            XCTAssertTrue(true)
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+    }
+
+    func testSendFeedbackTrimsMessageAndUsesSinglePhotoRequest() async throws {
+        var capturedRequest: URLRequest?
+        var requestCount = 0
+
+        URLProtocolStub.requestHandler = { request in
+            requestCount += 1
+            capturedRequest = request
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, Data())
+        }
+
+        let imageURL = try makeTempImageURL(ext: "jpg")
+        try await TelegramReporter.sendFeedback(
+            token: "abc123",
+            chatID: "42",
+            additional: "QA",
+            text: "  hello from sender  ",
+            imageURL: imageURL
+        )
+
+        XCTAssertEqual(capturedRequest?.url?.absoluteString, "https://api.telegram.org/botabc123/sendPhoto")
+        XCTAssertEqual(requestCount, 1)
+    }
+
     func testStartLogReportWithIgnoreFirstLaunchSendsMessage() async {
         var requestCount = 0
         var capturedRequest: URLRequest?
@@ -228,5 +388,13 @@ final class TransportAndReporterTests: XCTestCase {
         )
 
         XCTAssertFalse(reported)
+    }
+
+    private func makeTempImageURL(ext: String) throws -> URL {
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString)
+            .appendingPathExtension(ext)
+        try Data([0xFF, 0xD8, 0xFF]).write(to: url)
+        return url
     }
 }
