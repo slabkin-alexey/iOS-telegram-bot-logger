@@ -1,44 +1,11 @@
-//
-//  Transport.swift
-//
-
 import Foundation
 
 enum Transport {
+    typealias Attachment = TransportAttachment
+    typealias TransportError = TelegramTransportError
+
     private static let sendMessageEndpoint = "https://api.telegram.org/bot%@/sendMessage"
     private static let sendPhotoEndpoint = "https://api.telegram.org/bot%@/sendPhoto"
-
-    private struct SendMessagePayload: Encodable {
-        let chatID: String
-        let text: String
-        let disableWebPagePreview: Bool
-
-        enum CodingKeys: String, CodingKey {
-            case chatID = "chat_id"
-            case text
-            case disableWebPagePreview = "disable_web_page_preview"
-        }
-    }
-
-    struct Attachment {
-        let data: Data
-        let fileName: String
-        let mimeType: String
-    }
-
-    enum TransportError: LocalizedError {
-        case invalidResponse
-        case serverError(statusCode: Int, body: String)
-
-        var errorDescription: String? {
-            switch self {
-            case .invalidResponse:
-                return "Invalid HTTP response from Telegram API"
-            case let .serverError(statusCode, body):
-                return "Telegram API error (HTTP \(statusCode)): \(body)"
-            }
-        }
-    }
 
     static func send(_ text: String, using cfg: Config, attachment: Attachment? = nil) async throws {
         if let attachment {
@@ -52,7 +19,7 @@ enum Transport {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let payload = SendMessagePayload(
+        let payload = TransportSendMessagePayload(
             chatID: cfg.chatID,
             text: text,
             disableWebPagePreview: true
