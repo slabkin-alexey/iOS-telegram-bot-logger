@@ -29,13 +29,13 @@ git push origin 1.1.1
 Verify the local tag:
 
 ```bash
-git tag --list | rg "^1\\.1$"
+git tag --list | rg "^1\\.1\\.1$"
 ```
 
 Verify the remote tag:
 
 ```bash
-git ls-remote --tags origin | rg "refs/tags/1\\.1"
+git ls-remote --tags origin | rg "refs/tags/1\\.1\\.1"
 ```
 
 ## Consumer Installation
