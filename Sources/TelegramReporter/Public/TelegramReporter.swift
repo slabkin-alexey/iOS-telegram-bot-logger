@@ -35,7 +35,7 @@ public enum TelegramReporter {
         additional: String,
         imageFileURL: URL? = nil
     ) async {
-        let attachment = FeedbackImageLoader.prepareImageAttachment(from: imageFileURL)
+        let attachment = await FeedbackImageLoader.prepareImageAttachment(from: imageFileURL)
         await report(.custom(title: title, details: details), token: token, chatID: chatID, additional: additional, attachment: attachment)
     }
 
@@ -61,7 +61,11 @@ public enum TelegramReporter {
             "Preparing feedback event, chatID=\(chatID), textLength=\(trimmed.count), hasPickerImage=\(feedbackImage != nil), hasImageURL=\(imageURL != nil || imageFileURL != nil)"
         )
         let resolvedImageURL = imageURL ?? imageFileURL
-        let image = feedbackImage ?? FeedbackImageLoader.prepareFeedbackImage(from: resolvedImageURL)
+        let image = if let feedbackImage {
+            feedbackImage
+        } else {
+            await FeedbackImageLoader.prepareFeedbackImage(from: resolvedImageURL)
+        }
         await report(.feedback(text: trimmed, image: image), token: token, chatID: chatID, additional: additional)
     }
 
@@ -70,19 +74,15 @@ public enum TelegramReporter {
         chatID: String,
         additional: String,
         ignoreFirstLaunch: Bool,
-        getOrCreateInstallIdentity: () throws -> (id: String, isFirstForAccount: Bool),
+        getOrCreateInstallIdentity: @escaping @Sendable () throws -> (id: String, isFirstForAccount: Bool),
         reportFirstLaunch: (String, String, String) async -> Void
     ) async {
         do {
-            if ignoreFirstLaunch {
-                ReporterLogger.log("TelegramReporter.startLogReport", "ignoreFirstLaunch=true, sending firstLaunch report immediately")
-                await reportFirstLaunch(token, chatID, additional)
-                return
-            }
-
-            let (_, isFirstForAccount) = try getOrCreateInstallIdentity()
-            ReporterLogger.log("TelegramReporter.startLogReport", "Resolved install identity, isFirstForAccount=\(isFirstForAccount)")
-            guard isFirstForAccount else {
+            let shouldSend = try await InstallIdentityService.shouldSendFirstLaunch(
+                ignoreFirstLaunch: ignoreFirstLaunch,
+                getOrCreateInstallIdentity: getOrCreateInstallIdentity
+            )
+            guard shouldSend else {
                 ReporterLogger.log("TelegramReporter.startLogReport", "Skipping report because this is not first launch for account")
                 return
             }

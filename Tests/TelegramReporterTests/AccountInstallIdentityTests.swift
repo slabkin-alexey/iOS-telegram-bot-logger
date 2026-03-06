@@ -1,3 +1,4 @@
+import Security
 import XCTest
 @testable import TelegramReporter
 
@@ -14,28 +15,25 @@ final class AccountInstallIdentityTests: XCTestCase {
     }
 
     func testGetOrCreateCreatesNewIDWhenNoStoredValue() throws {
-        var capturedData: Data?
-        var capturedService: String?
-        var capturedAccount: String?
-        var capturedSync: Bool?
+        let capture = CaptureBox()
 
         let result = try AccountInstallIdentity.getOrCreate(
             read: { _, _, _ in nil },
             upsert: { data, service, account, synchronizable in
-                capturedData = data
-                capturedService = service
-                capturedAccount = account
-                capturedSync = synchronizable
+                capture.data = data
+                capture.service = service
+                capture.account = account
+                capture.synchronizable = synchronizable
             },
             makeID: { "generated-id" }
         )
 
         XCTAssertEqual(result.id, "generated-id")
         XCTAssertTrue(result.isFirstForAccount)
-        XCTAssertEqual(capturedData, Data("generated-id".utf8))
-        XCTAssertEqual(capturedService, "com.melissun_team.accountInstall")
-        XCTAssertEqual(capturedAccount, "account_install_id")
-        XCTAssertEqual(capturedSync, true)
+        XCTAssertEqual(capture.data, Data("generated-id".utf8))
+        XCTAssertEqual(capture.service, "com.melissun_team.accountInstall")
+        XCTAssertEqual(capture.account, "account_install_id")
+        XCTAssertEqual(capture.synchronizable, true)
     }
 
     func testGetOrCreateCreatesNewIDWhenStoredDataIsNotUTF8() throws {
@@ -61,16 +59,84 @@ final class AccountInstallIdentityTests: XCTestCase {
     }
 
     func testGetOrCreatePropagatesUpsertError() {
-        enum DummyError: Error { case failed }
-
         XCTAssertThrowsError(
             try AccountInstallIdentity.getOrCreate(
                 read: { _, _, _ in nil },
-                upsert: { _, _, _, _ in throw DummyError.failed },
+                upsert: { _, _, _, _ in throw TestError.failed },
                 makeID: { "generated-id" }
             )
         ) { error in
-            XCTAssertTrue(error is DummyError)
+            XCTAssertEqual(error as? TestError, .failed)
+        }
+    }
+
+    func testIDFactoryReturnsNonEmptyIdentifier() {
+        XCTAssertFalse(AccountInstallIdentity.idFactory().isEmpty)
+    }
+
+    func testKeychainReadReturnsNilForUnknownValue() {
+        let service = "tests.service.\(UUID().uuidString)"
+        let account = "tests.account.\(UUID().uuidString)"
+
+        XCTAssertNil(AccountInstallIdentity.keychainRead(service: service, account: account, synchronizable: false))
+    }
+
+    func testKeychainUpsertCanBeInvokedDirectly() {
+        let service = "tests.service.\(UUID().uuidString)"
+        let account = "tests.account.\(UUID().uuidString)"
+
+        do {
+            try AccountInstallIdentity.keychainUpsert(
+                data: Data("value".utf8),
+                service: service,
+                account: account,
+                synchronizable: false
+            )
+        } catch {
+            XCTAssertNotNil(error)
+        }
+    }
+
+    func testInjectedKeychainUpsertStoresValue() throws {
+        let storage = InMemoryKeychainSecurityClient()
+        let client = storage.makeClient()
+        let service = "tests.service.injected.\(UUID().uuidString)"
+        let account = "tests.account.injected.\(UUID().uuidString)"
+
+        try AccountInstallIdentity.keychainUpsert(
+            data: Data("stored".utf8),
+            service: service,
+            account: account,
+            synchronizable: false,
+            client: client
+        )
+
+        let stored = KeychainStore.read(
+            service: service,
+            account: account,
+            synchronizable: false,
+            client: client
+        )
+        XCTAssertEqual(stored, Data("stored".utf8))
+    }
+
+    func testInjectedKeychainUpsertPropagatesClientError() {
+        let client = KeychainSecurityClient(
+            copyMatching: { _, _ in errSecSuccess },
+            itemUpdate: { _, _ in errSecItemNotFound },
+            itemAdd: { _, _ in errSecAuthFailed }
+        )
+
+        XCTAssertThrowsError(
+            try AccountInstallIdentity.keychainUpsert(
+                data: Data("stored".utf8),
+                service: "service",
+                account: "account",
+                synchronizable: false,
+                client: client
+            )
+        ) { error in
+            XCTAssertEqual(error as? KeychainStoreError, .osStatus(errSecAuthFailed))
         }
     }
 }

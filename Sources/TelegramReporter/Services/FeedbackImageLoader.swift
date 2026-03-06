@@ -1,12 +1,18 @@
 import Foundation
 
 enum FeedbackImageLoader {
-    static func prepareImageAttachment(from imageFileURL: URL?) -> Transport.Attachment? {
-        guard let image = prepareFeedbackImage(from: imageFileURL) else { return nil }
+    static func prepareImageAttachment(
+        from imageFileURL: URL?,
+        loadData: @escaping @Sendable (URL) throws -> Data = { try Data(contentsOf: $0) }
+    ) async -> Transport.Attachment? {
+        guard let image = await prepareFeedbackImage(from: imageFileURL, loadData: loadData) else { return nil }
         return Transport.Attachment(data: image.data, fileName: image.fileName, mimeType: image.mimeType)
     }
 
-    static func prepareFeedbackImage(from imageFileURL: URL?) -> FeedbackImage? {
+    static func prepareFeedbackImage(
+        from imageFileURL: URL?,
+        loadData: @escaping @Sendable (URL) throws -> Data = { try Data(contentsOf: $0) }
+    ) async -> FeedbackImage? {
         guard let imageFileURL else {
             ReporterLogger.log("FeedbackImageLoader", "No image provided, sending message without attachment")
             return nil
@@ -22,7 +28,9 @@ enum FeedbackImageLoader {
         }
 
         do {
-            let data = try Data(contentsOf: imageFileURL)
+            let data = try await BackgroundTaskRunner.run {
+                try loadData(imageFileURL)
+            }
             ReporterLogger.log(
                 "FeedbackImageLoader",
                 "Loaded image attachment '\(imageFileURL.lastPathComponent)', size=\(data.count), mimeType=\(mimeType)"

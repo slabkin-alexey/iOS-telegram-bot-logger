@@ -3,9 +3,6 @@
 //
 
 import Foundation
-#if canImport(UIKit)
-import UIKit
-#endif
 
 enum MessageBuilder {
     static func build(_ event: TelegramReporterEvent, additional: String) -> String {
@@ -55,9 +52,9 @@ enum MessageBuilder {
         let build = appBuild
         let system = "\(systemName) \(systemVersion)"
         let regionCode = currentRegionCode
-        let countryName = englishLocale.localizedString(forRegionCode: regionCode) ?? "Unknown"
+        let countryName = localizedRegionName(for: regionCode)
         let languageCode = currentLanguageCode
-        let localeName = englishLocale.localizedString(forLanguageCode: languageCode) ?? "Unknown"
+        let localeName = localizedLanguageName(for: languageCode)
         let displayNameSuffix = additional.trimmingCharacters(in: .whitespacesAndNewlines)
 
         return [
@@ -92,8 +89,14 @@ enum MessageBuilder {
     }
 
     private static var currentLanguageCode: String {
-        let preferredLanguage = Locale.preferredLanguages.first ?? "Unknown"
-        return preferredLanguage.split(separator: "-").first.map(String.init) ?? "Unknown"
+        currentLanguageCode(preferredLanguage: Locale.preferredLanguages.first)
+    }
+
+    static func currentLanguageCode(preferredLanguage: String?) -> String {
+        preferredLanguage?
+            .split(separator: "-")
+            .first
+            .map(String.init) ?? "Unknown"
     }
 
     private static var buildSource: String {
@@ -105,34 +108,54 @@ enum MessageBuilder {
     }
 
     private static var systemName: String {
-#if canImport(UIKit)
-        UIDevice.current.systemName
+#if os(iOS)
+        "iOS"
+#elseif os(tvOS)
+        "tvOS"
+#elseif os(visionOS)
+        "visionOS"
+#elseif os(macOS)
+        "macOS"
 #else
         "Unknown"
 #endif
     }
 
     private static var systemVersion: String {
-#if canImport(UIKit)
-        UIDevice.current.systemVersion
-#else
-        ProcessInfo.processInfo.operatingSystemVersionString
-#endif
+        let version = ProcessInfo.processInfo.operatingSystemVersion
+        return "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
     }
 
     private static var idiom: String {
-#if canImport(UIKit)
-        switch UIDevice.current.userInterfaceIdiom {
-        case .phone: return "iPhone"
-        case .pad: return "iPad"
-        case .mac: return "Mac"
-        case .tv: return "Apple TV"
-        case .vision: return "Vision"
-        default: return "Unknown"
-        }
+#if os(macOS)
+        return "Mac"
 #else
-        return "Unknown"
+        return idiom(for: deviceModelName)
 #endif
+    }
+
+    static func idiom(for deviceModelName: String) -> String {
+        if deviceModelName.hasPrefix("iPhone") {
+            return "iPhone"
+        }
+        if deviceModelName.hasPrefix("iPad") {
+            return "iPad"
+        }
+        if deviceModelName.hasPrefix("Apple TV") {
+            return "Apple TV"
+        }
+        if deviceModelName.hasPrefix("Apple Vision") || deviceModelName.hasPrefix("Vision") {
+            return "Vision"
+        }
+        return "Unknown"
+    }
+
+    static func localizedRegionName(for regionCode: String, locale: Locale = englishLocale) -> String {
+        locale.localizedString(forRegionCode: regionCode) ?? "Unknown"
+    }
+
+    static func localizedLanguageName(for languageCode: String, locale: Locale = englishLocale) -> String {
+        locale.localizedString(forLanguageCode: languageCode) ?? "Unknown"
     }
 
     private static var appName: String {
@@ -152,24 +175,25 @@ enum MessageBuilder {
     }
 
     private static var deviceModelName: String {
-#if canImport(UIKit)
         DeviceModelResolver.currentModelName
-#else
-        "Unknown Device"
-#endif
     }
 
     private static func formatDetails(_ details: [String: String]) -> String {
         ReporterLogger.log("MessageBuilder.formatDetails", "Formatting details, count=\(details.count)")
-        return details
-            .sorted(by: { $0.key < $1.key })
-            .map { key, value in
-                let normalizedValue = value
-                    .replacingOccurrences(of: "\n", with: " ")
-                    .trimmingCharacters(in: .whitespacesAndNewlines)
-                return "• \(key): \(normalizedValue)"
-            }
-            .joined(separator: "\n")
+        let sortedDetails = details.sorted { lhs, rhs in
+            lhs.key < rhs.key
+        }
+        var lines: [String] = []
+        lines.reserveCapacity(sortedDetails.count)
+
+        for (key, value) in sortedDetails {
+            let normalizedValue = value
+                .replacingOccurrences(of: "\n", with: " ")
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            lines.append("• \(key): \(normalizedValue)")
+        }
+
+        return lines.joined(separator: "\n")
     }
 
     private static func withAppTag(_ message: String) -> String {
@@ -177,12 +201,18 @@ enum MessageBuilder {
     }
 
     private static var appHashtag: String {
-        let words = appName
-            .lowercased()
-            .components(separatedBy: CharacterSet.alphanumerics.inverted)
-            .filter { !$0.isEmpty }
-            .joined()
+        let loweredName = appName.lowercased()
+        var words: [String] = []
+        words.reserveCapacity(loweredName.count)
 
-        return words.isEmpty ? "unknownapp" : words
+        for component in loweredName.components(separatedBy: CharacterSet.alphanumerics.inverted) {
+            if !component.isEmpty {
+                words.append(component)
+            }
+        }
+
+        let hashtag = words.joined()
+
+        return hashtag.isEmpty ? "unknownapp" : hashtag
     }
 }

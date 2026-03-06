@@ -11,9 +11,10 @@ enum ReporterService {
         ReporterLogger.log("ReporterService.report", "Preparing event=\(event.logName), chatID=\(chatID)")
         let cfg = Config(token: token, chatID: chatID)
         let viewModel = ReportViewModel(event: event, additional: additional)
+        let message = viewModel.message
         let routedAttachment = attachment ?? viewModel.attachment
-        ReporterLogger.log("ReporterService.report", "Built message for event=\(event.logName), length=\(viewModel.message.count)")
-        try await Transport.send(viewModel.message, using: cfg, attachment: routedAttachment)
+        ReporterLogger.log("ReporterService.report", "Built message for event=\(event.logName), length=\(message.count)")
+        try await Transport.send(message, using: cfg, attachment: routedAttachment)
         ReporterLogger.log("ReporterService.report", "Sent event=\(event.logName) successfully")
     }
 }

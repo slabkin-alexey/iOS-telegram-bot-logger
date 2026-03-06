@@ -24,8 +24,9 @@ enum Transport {
             text: text,
             disableWebPagePreview: true
         )
-        request.httpBody = try JSONEncoder().encode(payload)
-        ReporterLogger.log("Transport.send", "Request payload encoded, bodyLength=\(request.httpBody?.count ?? 0)")
+        let body = try JSONEncoder().encode(payload)
+        request.httpBody = body
+        ReporterLogger.log("Transport.send", "Request payload encoded, bodyLength=\(body.count)")
         try await sendRequest(request)
     }
 
@@ -39,13 +40,14 @@ enum Transport {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        request.httpBody = makePhotoMultipartBody(
+        let body = makePhotoMultipartBody(
             chatID: cfg.chatID,
             caption: text,
             attachment: attachment,
             boundary: boundary
         )
-        ReporterLogger.log("Transport.sendPhoto", "Multipart payload encoded, bodyLength=\(request.httpBody?.count ?? 0)")
+        request.httpBody = body
+        ReporterLogger.log("Transport.sendPhoto", "Multipart payload encoded, bodyLength=\(body.count)")
         try await sendRequest(request)
     }
 
@@ -71,28 +73,11 @@ enum Transport {
         attachment: Attachment,
         boundary: String
     ) -> Data {
-        let lineBreak = "\r\n"
-        var body = Data()
-
-        func append(_ value: String) {
-            body.append(Data(value.utf8))
-        }
-
-        append("--\(boundary)\(lineBreak)")
-        append("Content-Disposition: form-data; name=\"chat_id\"\(lineBreak)\(lineBreak)")
-        append("\(chatID)\(lineBreak)")
-
-        append("--\(boundary)\(lineBreak)")
-        append("Content-Disposition: form-data; name=\"caption\"\(lineBreak)\(lineBreak)")
-        append("\(caption)\(lineBreak)")
-
-        append("--\(boundary)\(lineBreak)")
-        append("Content-Disposition: form-data; name=\"photo\"; filename=\"\(attachment.fileName)\"\(lineBreak)")
-        append("Content-Type: \(attachment.mimeType)\(lineBreak)\(lineBreak)")
-        body.append(attachment.data)
-        append(lineBreak)
-
-        append("--\(boundary)--\(lineBreak)")
-        return body
+        var builder = TransportMultipartBodyBuilder(boundary: boundary)
+        builder.addTextField(name: "chat_id", value: chatID)
+        builder.addTextField(name: "caption", value: caption)
+        builder.addFileField(name: "photo", attachment: attachment)
+        builder.finalize()
+        return builder.build()
     }
 }

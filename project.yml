@@ -1,0 +1,132 @@
+name: TelegramReporter
+options:
+  minimumXcodeGenVersion: 2.34.0
+  bundleIdPrefix: com.slabkin.telegramreporter
+  deploymentTarget:
+    iOS: "18.0"
+configs:
+  Debug: debug
+  Release: release
+targets:
+  TelegramReporter:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Sources/TelegramReporter
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.slabkin.telegramreporter.framework
+        PRODUCT_NAME: TelegramReporter
+        SWIFT_VERSION: 6.0
+        CODE_SIGNING_ALLOWED: NO
+        DEFINES_MODULE: YES
+        SKIP_INSTALL: NO
+    info:
+      path: Config/TelegramReporter-Info.plist
+      properties:
+        CFBundleDevelopmentRegion: en
+        CFBundleShortVersionString: "1.1"
+        CFBundleVersion: "1.1"
+
+  TelegramReporterDemo:
+    type: application
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: DemoApp/Sources
+    resources:
+      - path: DemoApp/Resources/en.lproj/Localizable.strings
+      - path: DemoApp/Resources/uk.lproj/Localizable.strings
+    dependencies:
+      - target: TelegramReporter
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.slabkin.telegramreporter.demo
+        PRODUCT_NAME: TelegramReporterDemo
+        SWIFT_VERSION: 6.0
+        CODE_SIGNING_ALLOWED: NO
+        EXTRACT_APP_INTENTS_METADATA: NO
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDevelopmentRegion: en
+        INFOPLIST_KEY_CFBundleDisplayName: TelegramReporter Demo
+        INFOPLIST_KEY_CFBundleShortVersionString: "1.1"
+        INFOPLIST_KEY_CFBundleVersion: "1.1"
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+
+  TelegramReporterTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Tests/TelegramReporterTests
+    dependencies:
+      - target: TelegramReporter
+      - target: TelegramReporterDemo
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.slabkin.telegramreporter.frameworkTests
+        PRODUCT_NAME: TelegramReporterTests
+        SWIFT_VERSION: 6.0
+        CODE_SIGNING_ALLOWED: NO
+        EXTRACT_APP_INTENTS_METADATA: NO
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/TelegramReporterDemo.app/TelegramReporterDemo"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        GENERATE_INFOPLIST_FILE: YES
+
+  TelegramReporterDemoTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: DemoAppTests
+    dependencies:
+      - target: TelegramReporterDemo
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.slabkin.telegramreporter.demoTests
+        PRODUCT_NAME: TelegramReporterDemoTests
+        SWIFT_VERSION: 6.0
+        CODE_SIGNING_ALLOWED: NO
+        EXTRACT_APP_INTENTS_METADATA: NO
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/TelegramReporterDemo.app/TelegramReporterDemo"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        GENERATE_INFOPLIST_FILE: YES
+
+schemes:
+  TelegramReporter:
+    build:
+      targets:
+        TelegramReporter: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+
+  TelegramReporterDemo:
+    shared: true
+    build:
+      targets:
+        TelegramReporterDemo: all
+        TelegramReporter: all
+        TelegramReporterTests: [test]
+        TelegramReporterDemoTests: [test]
+    run:
+      config: Debug
+      executable: TelegramReporterDemo
+    test:
+      config: Debug
+      gatherCoverageData: true
+      coverageTargets:
+        - TelegramReporter
+        - TelegramReporterDemo
+      macroExpansion: TelegramReporterDemo
+      testPlans:
+        - path: TelegramReporter.xctestplan
+          defaultPlan: true
+      targets:
+        - name: TelegramReporterTests
+        - name: TelegramReporterDemoTests
+    archive:
+      config: Release

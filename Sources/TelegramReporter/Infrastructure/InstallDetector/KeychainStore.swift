@@ -10,7 +10,12 @@ enum KeychainStore {
         value ? kCFBooleanTrue : kCFBooleanFalse
     }
 
-    static func read(service: String, account: String, synchronizable: Bool) -> Data? {
+    static func read(
+        service: String,
+        account: String,
+        synchronizable: Bool,
+        client: KeychainSecurityClient = .live
+    ) -> Data? {
         ReporterLogger.log(
             "KeychainStore.read",
             "Reading keychain item for service=\(service), account=\(account), synchronizable=\(synchronizable)"
@@ -25,7 +30,7 @@ enum KeychainStore {
         ]
 
         var item: CFTypeRef?
-        let status = SecItemCopyMatching(query as CFDictionary, &item)
+        let status = client.copyMatching(query as CFDictionary, &item)
         guard status == errSecSuccess else {
             ReporterLogger.log("KeychainStore.read", "Read failed with status=\(status)")
             return nil
@@ -34,10 +39,13 @@ enum KeychainStore {
         return item as? Data
     }
 
-    static func upsert(_ data: Data,
-                       service: String,
-                       account: String,
-                       synchronizable: Bool) throws {
+    static func upsert(
+        _ data: Data,
+        service: String,
+        account: String,
+        synchronizable: Bool,
+        client: KeychainSecurityClient = .live
+    ) throws {
         ReporterLogger.log(
             "KeychainStore.upsert",
             "Upserting keychain item for service=\(service), account=\(account), synchronizable=\(synchronizable), dataLength=\(data.count)"
@@ -53,24 +61,22 @@ enum KeychainStore {
             kSecValueData as String: data
         ]
 
-        let status = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
+        let status = client.itemUpdate(query as CFDictionary, attributes as CFDictionary)
         if status == errSecItemNotFound {
             ReporterLogger.log("KeychainStore.upsert", "Item not found, performing add")
             var addQuery = query
             addQuery[kSecValueData as String] = data
-            let addStatus = SecItemAdd(addQuery as CFDictionary, nil)
+            let addStatus = client.itemAdd(addQuery as CFDictionary, nil)
             guard addStatus == errSecSuccess else {
                 ReporterLogger.log("KeychainStore.upsert", "Add failed with status=\(addStatus)")
-                throw KeychainError.osStatus(addStatus)
+                throw KeychainStoreError.osStatus(addStatus)
             }
             ReporterLogger.log("KeychainStore.upsert", "Add succeeded")
         } else if status != errSecSuccess {
             ReporterLogger.log("KeychainStore.upsert", "Update failed with status=\(status)")
-            throw KeychainError.osStatus(status)
+            throw KeychainStoreError.osStatus(status)
         } else {
             ReporterLogger.log("KeychainStore.upsert", "Update succeeded")
         }
     }
-
-    enum KeychainError: Error { case osStatus(OSStatus) }
 }

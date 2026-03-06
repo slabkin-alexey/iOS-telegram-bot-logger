@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "15A24E62-78E6-4B91-A5F0-3A4F72B9C5E1",
+      "name" : "Default",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:TelegramReporter.xcodeproj",
+      "identifier" : "DF299154C01041CBD9078938",
+      "name" : "TelegramReporterDemo"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:TelegramReporter.xcodeproj",
+        "identifier" : "BB84B5D2D97208E69E828F5F",
+        "name" : "TelegramReporterTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:TelegramReporter.xcodeproj",
+        "identifier" : "F892589AC48A3A119CECB2D2",
+        "name" : "TelegramReporterDemoTests"
+      }
+    },
+  ],
+  "version" : 1
+}

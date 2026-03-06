@@ -1,4 +1,6 @@
 title: TelegramReporter
 description: TelegramReporter documentation
+url: https://slabkin-alexey.github.io
+baseurl: /iOS-telegram-bot-logger
 theme: minima
 markdown: kramdown

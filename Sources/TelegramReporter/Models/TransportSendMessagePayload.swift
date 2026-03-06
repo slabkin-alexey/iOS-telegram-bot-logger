@@ -5,9 +5,10 @@ struct TransportSendMessagePayload: Encodable {
     let text: String
     let disableWebPagePreview: Bool
 
-    enum CodingKeys: String, CodingKey {
-        case chatID = "chat_id"
-        case text
-        case disableWebPagePreview = "disable_web_page_preview"
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: TransportSendMessagePayloadKey.self)
+        try container.encode(chatID, forKey: .chatID)
+        try container.encode(text, forKey: .text)
+        try container.encode(disableWebPagePreview, forKey: .disableWebPagePreview)
     }
 }

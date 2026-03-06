@@ -28,47 +28,99 @@
       "inputs" : [
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Config.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Concurrency/BackgroundTaskRunner.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/DeviceModelCatalog.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Device/DeviceModelCatalog.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/DeviceModelResolver.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Device/DeviceModelResolver.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/FeedbackImage.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/AccountInstallIdentity.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/AccountInstallIdentity.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/KeychainSecurityClient.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/KeychainStore.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/KeychainStore.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/MessageBuilder.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/KeychainStoreError.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/ReporterLogger.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Logging/ReporterLogger.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporter.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/Config.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporterEvent.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/FeedbackImage.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Transport.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TelegramReporterEvent.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TelegramTransportError.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportAttachment.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportMultipartBodyBuilder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportSendMessagePayload.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportSendMessagePayloadKey.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Public/TelegramReporter.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Public/TelegramReporterFeedbackError.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/FeedbackImageLoader.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/InstallIdentityService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/ReporterService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/Transport.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/ViewModels/MessageBuilder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/ViewModels/ReportViewModel.swift"
         },
         {
           "kind" : "file",
@@ -83,17 +135,30 @@
       "moduleName" : "TelegramReporter",
       "moduleOutputPath" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/Modules/TelegramReporter.swiftmodule",
       "objects" : [
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Config.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/BackgroundTaskRunner.swift.o",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/DeviceModelCatalog.swift.o",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/DeviceModelResolver.swift.o",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/FeedbackImage.swift.o",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/AccountInstallIdentity.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/KeychainSecurityClient.swift.o",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/KeychainStore.swift.o",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/MessageBuilder.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/KeychainStoreError.swift.o",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/ReporterLogger.swift.o",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramReporter.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Config.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/FeedbackImage.swift.o",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramReporterEvent.swift.o",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Transport.swift.o"
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramTransportError.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TransportAttachment.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TransportMultipartBodyBuilder.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TransportSendMessagePayload.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TransportSendMessagePayloadKey.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramReporter.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramReporterFeedbackError.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/FeedbackImageLoader.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/InstallIdentityService.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/ReporterService.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Transport.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/MessageBuilder.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/ReportViewModel.swift.o"
       ],
       "otherArguments" : [
         "-target",
@@ -154,7 +219,7 @@
       "outputs" : [
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Config.swift.o"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/BackgroundTaskRunner.swift.o"
         },
         {
           "kind" : "file",
@@ -166,11 +231,11 @@
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/FeedbackImage.swift.o"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/AccountInstallIdentity.swift.o"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/AccountInstallIdentity.swift.o"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/KeychainSecurityClient.swift.o"
         },
         {
           "kind" : "file",
@@ -178,7 +243,7 @@
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/MessageBuilder.swift.o"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/KeychainStoreError.swift.o"
         },
         {
           "kind" : "file",
@@ -186,7 +251,11 @@
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramReporter.swift.o"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Config.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/FeedbackImage.swift.o"
         },
         {
           "kind" : "file",
@@ -194,7 +263,55 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramTransportError.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TransportAttachment.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TransportMultipartBodyBuilder.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TransportSendMessagePayload.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TransportSendMessagePayloadKey.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramReporter.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramReporterFeedbackError.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/FeedbackImageLoader.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/InstallIdentityService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/ReporterService.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Transport.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/MessageBuilder.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/ReportViewModel.swift.o"
         },
         {
           "kind" : "file",
@@ -203,17 +320,30 @@
       ],
       "prepareForIndexing" : false,
       "sources" : [
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Config.swift",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/DeviceModelCatalog.swift",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/DeviceModelResolver.swift",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/FeedbackImage.swift",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/AccountInstallIdentity.swift",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/KeychainStore.swift",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/MessageBuilder.swift",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/ReporterLogger.swift",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporter.swift",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporterEvent.swift",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Transport.swift"
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Concurrency/BackgroundTaskRunner.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Device/DeviceModelCatalog.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Device/DeviceModelResolver.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/AccountInstallIdentity.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/KeychainSecurityClient.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/KeychainStore.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/KeychainStoreError.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Logging/ReporterLogger.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/Config.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/FeedbackImage.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TelegramReporterEvent.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TelegramTransportError.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportAttachment.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportMultipartBodyBuilder.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportSendMessagePayload.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportSendMessagePayloadKey.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Public/TelegramReporter.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Public/TelegramReporterFeedbackError.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/FeedbackImageLoader.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/InstallIdentityService.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/ReporterService.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/Transport.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/ViewModels/MessageBuilder.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/ViewModels/ReportViewModel.swift"
       ],
       "tempsPath" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build",
       "wholeModuleOptimization" : false
@@ -330,11 +460,27 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/BackgroundTaskRunnerTests.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/DeviceModelTests.swift"
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/FeedbackImageLoaderTests.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/FeedbackImageTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/InstallIdentityServiceTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/KeychainStoreMockTests.swift"
         },
         {
           "kind" : "file",
@@ -346,11 +492,43 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/ReportViewModelTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/CaptureBox.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/InMemoryKeychainSecurityClient.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/TestError.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/URLProtocolStub.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TelegramReporterEventTests.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportAndReporterTests.swift"
         },
         {
           "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportErrorTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportMultipartBodyBuilderTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportPayloadEncodingTests.swift"
         },
         {
           "kind" : "file",
@@ -370,12 +548,24 @@
       "moduleOutputPath" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/Modules/TelegramReporterTests.swiftmodule",
       "objects" : [
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/AccountInstallIdentityTests.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/BackgroundTaskRunnerTests.swift.o",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/DeviceModelTests.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/FeedbackImageLoaderTests.swift.o",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/FeedbackImageTests.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/InstallIdentityServiceTests.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/KeychainStoreMockTests.swift.o",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/KeychainStoreTests.swift.o",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/MessageBuilderTests.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/ReportViewModelTests.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/CaptureBox.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/InMemoryKeychainSecurityClient.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TestError.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/URLProtocolStub.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TelegramReporterEventTests.swift.o",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TransportAndReporterTests.swift.o",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TransportErrorTests.swift.o"
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TransportErrorTests.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TransportMultipartBodyBuilderTests.swift.o",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TransportPayloadEncodingTests.swift.o"
       ],
       "otherArguments" : [
         "-target",
@@ -439,11 +629,27 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/BackgroundTaskRunnerTests.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/DeviceModelTests.swift.o"
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/FeedbackImageLoaderTests.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/FeedbackImageTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/InstallIdentityServiceTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/KeychainStoreMockTests.swift.o"
         },
         {
           "kind" : "file",
@@ -455,11 +661,43 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/ReportViewModelTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/CaptureBox.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/InMemoryKeychainSecurityClient.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TestError.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/URLProtocolStub.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TelegramReporterEventTests.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TransportAndReporterTests.swift.o"
         },
         {
           "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TransportErrorTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TransportMultipartBodyBuilderTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TransportPayloadEncodingTests.swift.o"
         },
         {
           "kind" : "file",
@@ -469,12 +707,24 @@
       "prepareForIndexing" : false,
       "sources" : [
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/AccountInstallIdentityTests.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/BackgroundTaskRunnerTests.swift",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/DeviceModelTests.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/FeedbackImageLoaderTests.swift",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/FeedbackImageTests.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/InstallIdentityServiceTests.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/KeychainStoreMockTests.swift",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/KeychainStoreTests.swift",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/MessageBuilderTests.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/ReportViewModelTests.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/CaptureBox.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/InMemoryKeychainSecurityClient.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/TestError.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/URLProtocolStub.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TelegramReporterEventTests.swift",
         "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportAndReporterTests.swift",
-        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportErrorTests.swift"
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportErrorTests.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportMultipartBodyBuilderTests.swift",
+        "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportPayloadEncodingTests.swift"
       ],
       "tempsPath" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build",
       "wholeModuleOptimization" : false
@@ -491,17 +741,30 @@
       "-package-name",
       "ios_telegram_bot_logger",
       "-c",
-      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Config.swift",
-      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/DeviceModelCatalog.swift",
-      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/DeviceModelResolver.swift",
-      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/FeedbackImage.swift",
-      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/AccountInstallIdentity.swift",
-      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/KeychainStore.swift",
-      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/MessageBuilder.swift",
-      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/ReporterLogger.swift",
-      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporter.swift",
-      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporterEvent.swift",
-      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Transport.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Concurrency/BackgroundTaskRunner.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Device/DeviceModelCatalog.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Device/DeviceModelResolver.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/AccountInstallIdentity.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/KeychainSecurityClient.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/KeychainStore.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/KeychainStoreError.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Logging/ReporterLogger.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/Config.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/FeedbackImage.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TelegramReporterEvent.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TelegramTransportError.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportAttachment.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportMultipartBodyBuilder.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportSendMessagePayload.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportSendMessagePayloadKey.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Public/TelegramReporter.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Public/TelegramReporterFeedbackError.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/FeedbackImageLoader.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/InstallIdentityService.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/ReporterService.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/Transport.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/ViewModels/MessageBuilder.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/ViewModels/ReportViewModel.swift",
       "-I",
       "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/Modules",
       "-target",
@@ -634,12 +897,24 @@
       "ios_telegram_bot_logger",
       "-c",
       "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/AccountInstallIdentityTests.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/BackgroundTaskRunnerTests.swift",
       "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/DeviceModelTests.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/FeedbackImageLoaderTests.swift",
       "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/FeedbackImageTests.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/InstallIdentityServiceTests.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/KeychainStoreMockTests.swift",
       "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/KeychainStoreTests.swift",
       "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/MessageBuilderTests.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/ReportViewModelTests.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/CaptureBox.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/InMemoryKeychainSecurityClient.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/TestError.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/URLProtocolStub.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TelegramReporterEventTests.swift",
       "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportAndReporterTests.swift",
       "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportErrorTests.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportMultipartBodyBuilderTests.swift",
+      "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportPayloadEncodingTests.swift",
       "-I",
       "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/Modules",
       "-target",
@@ -741,47 +1016,99 @@
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Config.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Concurrency/BackgroundTaskRunner.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/DeviceModelCatalog.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Device/DeviceModelCatalog.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/DeviceModelResolver.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Device/DeviceModelResolver.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/FeedbackImage.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/AccountInstallIdentity.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/AccountInstallIdentity.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/KeychainSecurityClient.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/InstallDetector/KeychainStore.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/KeychainStore.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/MessageBuilder.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/InstallDetector/KeychainStoreError.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/ReporterLogger.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Infrastructure/Logging/ReporterLogger.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporter.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/Config.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/TelegramReporterEvent.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/FeedbackImage.swift"
         },
         {
           "kind" : "file",
-          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Transport.swift"
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TelegramReporterEvent.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TelegramTransportError.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportAttachment.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportMultipartBodyBuilder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportSendMessagePayload.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Models/TransportSendMessagePayloadKey.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Public/TelegramReporter.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Public/TelegramReporterFeedbackError.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/FeedbackImageLoader.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/InstallIdentityService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/ReporterService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/Services/Transport.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/ViewModels/MessageBuilder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Sources/TelegramReporter/ViewModels/ReportViewModel.swift"
         }
       ],
       "outputFilePath" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/sources"
@@ -813,6 +1140,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/BackgroundTaskRunner.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Config.swift.o"
         },
         {
@@ -829,7 +1160,23 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/FeedbackImageLoader.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/InstallIdentityService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/KeychainSecurityClient.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/KeychainStore.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/KeychainStoreError.swift.o"
         },
         {
           "kind" : "file",
@@ -837,7 +1184,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/ReportViewModel.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/ReporterLogger.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/ReporterService.swift.o"
         },
         {
           "kind" : "file",
@@ -849,7 +1204,31 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramReporterFeedbackError.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TelegramTransportError.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/Transport.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TransportAttachment.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TransportMultipartBodyBuilder.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TransportSendMessagePayload.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporter.build/TransportSendMessagePayloadKey.swift.o"
         },
         {
           "kind" : "file",
@@ -861,11 +1240,35 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/BackgroundTaskRunnerTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/CaptureBox.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/DeviceModelTests.swift.o"
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/FeedbackImageLoaderTests.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/FeedbackImageTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/InMemoryKeychainSecurityClient.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/InstallIdentityServiceTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/KeychainStoreMockTests.swift.o"
         },
         {
           "kind" : "file",
@@ -877,11 +1280,35 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/ReportViewModelTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TelegramReporterEventTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TestError.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TransportAndReporterTests.swift.o"
         },
         {
           "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TransportErrorTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TransportMultipartBodyBuilderTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/TransportPayloadEncodingTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/URLProtocolStub.swift.o"
         }
       ],
       "outputFilePath" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterPackageTests.product/Objects.LinkFileList"
@@ -899,11 +1326,27 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/BackgroundTaskRunnerTests.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/DeviceModelTests.swift"
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/FeedbackImageLoaderTests.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/FeedbackImageTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/InstallIdentityServiceTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/KeychainStoreMockTests.swift"
         },
         {
           "kind" : "file",
@@ -915,11 +1358,43 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/ReportViewModelTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/CaptureBox.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/InMemoryKeychainSecurityClient.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/TestError.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/Support/URLProtocolStub.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TelegramReporterEventTests.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportAndReporterTests.swift"
         },
         {
           "kind" : "file",
           "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportErrorTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportMultipartBodyBuilderTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/Tests/TelegramReporterTests/TransportPayloadEncodingTests.swift"
         }
       ],
       "outputFilePath" : "/Users/borunovalexey/New projects/iOS-telegram-bot-logger/.build/arm64-apple-macosx/debug/TelegramReporterTests.build/sources"

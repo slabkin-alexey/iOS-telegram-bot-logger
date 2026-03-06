@@ -175,6 +175,43 @@ final class MessageBuilderTests: XCTestCase {
         XCTAssertEqual(code, "Unknown")
     }
 
+    func testCurrentLanguageCodeUsesPreferredLanguagePrefix() {
+        XCTAssertEqual(MessageBuilder.currentLanguageCode(preferredLanguage: "uk-UA"), "uk")
+    }
+
+    func testCurrentLanguageCodeFallsBackToUnknownWhenMissing() {
+        XCTAssertEqual(MessageBuilder.currentLanguageCode(preferredLanguage: nil), "Unknown")
+    }
+
+    func testIdiomReturnsIPhoneForIPhoneModels() {
+        XCTAssertEqual(MessageBuilder.idiom(for: "iPhone 16 Pro"), "iPhone")
+    }
+
+    func testIdiomReturnsIPadForIPadModels() {
+        XCTAssertEqual(MessageBuilder.idiom(for: "iPad Pro 13-inch"), "iPad")
+    }
+
+    func testIdiomReturnsAppleTVForAppleTVModels() {
+        XCTAssertEqual(MessageBuilder.idiom(for: "Apple TV 4K"), "Apple TV")
+    }
+
+    func testIdiomReturnsVisionForVisionModels() {
+        XCTAssertEqual(MessageBuilder.idiom(for: "Apple Vision Pro"), "Vision")
+        XCTAssertEqual(MessageBuilder.idiom(for: "Vision Developer Kit"), "Vision")
+    }
+
+    func testIdiomReturnsUnknownForOtherModels() {
+        XCTAssertEqual(MessageBuilder.idiom(for: "MacBook Pro"), "Unknown")
+    }
+
+    func testLocalizedRegionNameFallsBackToUnknownForInvalidCode() {
+        XCTAssertEqual(MessageBuilder.localizedRegionName(for: "INVALID_REGION"), "Unknown")
+    }
+
+    func testLocalizedLanguageNameFallsBackToUnknownForInvalidCode() {
+        XCTAssertEqual(MessageBuilder.localizedLanguageName(for: "invalid_language"), "Unknown")
+    }
+
     private func normalizedHashtag(from appName: String) -> String {
         let words = appName
             .lowercased()

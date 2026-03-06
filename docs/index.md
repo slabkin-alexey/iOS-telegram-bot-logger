@@ -1,16 +1,58 @@
 # TelegramReporter Documentation
 
-TelegramReporter is a Swift Package for sending lifecycle, custom, and feedback events to Telegram with rich runtime metadata.
+TelegramReporter is a Swift Package for routing app events and user feedback into Telegram with structured metadata, stable formatting, and semantic-versioned distribution.
+
+Current documented release: `1.1`
+
+## Product Overview
+
+TelegramReporter is designed for teams that need a low-friction operational reporting channel for:
+
+- first-launch visibility,
+- internal QA diagnostics,
+- custom runtime events,
+- support-oriented user feedback,
+- optional screenshot or picker-image delivery.
+
+The package focuses on predictable output, lightweight integration, and safe runtime behavior in real applications.
+
+## What The Package Supports
+
+- First-launch reporting with account-scoped install identity checks
+- Lifecycle-style event delivery
+- Custom event delivery with sorted metadata details
+- Feedback delivery with optional attachment support
+- Single Telegram message delivery for image plus text
+- Background execution for expensive file and keychain work
+- Internal logging for operational traceability
+
+## Integrated Services
+
+- Telegram Bot API
+- Apple Keychain
+- Swift Package Manager
+- Xcode
+- Xcode Cloud
+- GitHub Pages
 
 ## Quick Links
 
-- [All Scenarios](./SCENARIOS.md)
-- [Architecture (MVVM)](./ARCHITECTURE.md)
-- [GitHub Pages Setup](./GITHUB_PAGES_SETUP.md)
+- [All supported scenarios](./SCENARIOS.md)
+- [Architecture](./ARCHITECTURE.md)
+- [GitHub Pages setup](./GITHUB_PAGES_SETUP.md)
 
-## Public API
+## Installation
 
-### Start report (first launch)
+```swift
+.package(
+    url: "https://github.com/slabkin-alexey/iOS-telegram-bot-logger.git",
+    from: "1.1"
+)
+```
+
+## Public API Examples
+
+### First-launch report
 
 ```swift
 await TelegramReporter.startLogReport(
@@ -20,7 +62,22 @@ await TelegramReporter.startLogReport(
 )
 ```
 
-### Feedback report (optional image)
+### Custom event
+
+```swift
+await TelegramReporter.sendCustomEvent(
+    token: TelegramBotConfig.token,
+    chatID: TelegramBotConfig.chatID,
+    title: "Sync Failed",
+    details: [
+        "reason": "timeout",
+        "screen": "paywall"
+    ],
+    additional: TelegramBotConfig.appTag
+)
+```
+
+### Feedback with an optional file attachment
 
 ```swift
 try await TelegramReporter.sendFeedback(
@@ -32,21 +89,27 @@ try await TelegramReporter.sendFeedback(
 )
 ```
 
-### Custom event
+### Feedback with an iOS picker image
 
 ```swift
-await TelegramReporter.sendCustomEvent(
+let pickerImage = FeedbackImage(
+    data: data,
+    fileName: "feedback.heic",
+    mimeType: "image/heic"
+)
+
+try await TelegramReporter.sendFeedback(
     token: TelegramBotConfig.token,
     chatID: TelegramBotConfig.chatID,
-    title: "Sync Failed",
-    details: ["reason": "timeout"],
-    additional: TelegramBotConfig.appTag
+    additional: TelegramBotConfig.appTag,
+    text: trimmed,
+    feedbackImage: pickerImage
 )
 ```
 
-## Message Format Baseline
+## Message Baseline
 
-All events include the same metadata block:
+Every report includes:
 
 - `📱 App`
 - `📦 Version`
@@ -56,24 +119,27 @@ All events include the same metadata block:
 - `🌍 Locale`
 - `🗺️ Region`
 
-Feedback additionally appends:
+Feedback appends:
 
-- `💬 User text: <text>`
+- `💬 User text: <message>`
 
-## Integrations
+## Validation Workflow
 
-- Telegram Bot API (`sendMessage`, `sendPhoto`)
-- Apple Keychain (synchronizable identity for first-launch behavior)
-- Swift Package Manager
-- Apple runtime metadata APIs (Bundle, Locale, UIDevice)
+Recommended release validation:
 
-## Installation (SPM)
-
-Use semantic version tags:
-
-```swift
-.package(
-    url: "https://github.com/<your-org>/<your-repo>.git",
-    from: "1.0.1"
-)
+```bash
+swift build
+swift test
+xcodebuild test \
+  -project TelegramReporter.xcodeproj \
+  -scheme TelegramReporterDemo \
+  -testPlan TelegramReporter \
+  -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+  CODE_SIGNING_ALLOWED=NO
 ```
+
+## Published Site
+
+GitHub Pages site:
+
+- [https://slabkin-alexey.github.io/iOS-telegram-bot-logger/](https://slabkin-alexey.github.io/iOS-telegram-bot-logger/)

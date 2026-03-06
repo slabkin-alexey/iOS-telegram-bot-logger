@@ -1,45 +1,53 @@
 # All Supported Scenarios
 
-This page lists all functional scenarios currently supported by TelegramReporter.
+This page documents the supported runtime behavior of TelegramReporter `1.1`.
 
-## 1. First launch report is sent once per account
-
-Trigger:
-
-```swift
-await TelegramReporter.startLogReport(token: ..., chatID: ..., additional: ...)
-```
-
-Behavior:
-
-- Resolves account-scoped install identity from synchronizable keychain.
-- Sends `✅ First Launch` only when launch is first for that account.
-- Skips sending on subsequent launches for the same account.
-
-## 2. Force first launch report
+## 1. First-launch report is sent once per account identity
 
 Trigger:
 
 ```swift
 await TelegramReporter.startLogReport(
-    token: ..., chatID: ..., additional: ..., ignoreFirstLaunch: true
+    token: ...,
+    chatID: ...,
+    additional: ...
 )
 ```
 
 Behavior:
 
-- Bypasses account-first check.
-- Always sends `✅ First Launch`.
+- Resolves a synchronizable account-scoped install identity
+- Sends `✅ First Launch` only once for that identity
+- Skips later launches for the same account identity
 
-## 3. App active event
+## 2. Forced first-launch report
 
-Trigger (internal/custom integrations):
+Trigger:
 
-- Event type: `.appDidBecomeActive`
+```swift
+await TelegramReporter.startLogReport(
+    token: ...,
+    chatID: ...,
+    additional: ...,
+    ignoreFirstLaunch: true
+)
+```
 
 Behavior:
 
-- Sends `▶️ App Became Active` with full metadata block.
+- Bypasses the one-time first-launch gate
+- Always sends the first-launch report
+
+## 3. App active report
+
+Trigger:
+
+- internal event `.appDidBecomeActive`
+
+Behavior:
+
+- Sends `▶️ App Became Active`
+- Reuses the same metadata baseline as other report types
 
 ## 4. Custom event without details
 
@@ -47,16 +55,19 @@ Trigger:
 
 ```swift
 await TelegramReporter.sendCustomEvent(
-    token: ..., chatID: ..., title: "Ping", additional: ...
+    token: ...,
+    chatID: ...,
+    title: "Ping",
+    additional: ...
 )
 ```
 
 Behavior:
 
-- Sends `🧩 <title>`.
-- Does not include `📋 Details` block when no details are provided.
+- Sends `🧩 Ping`
+- Omits the details section entirely
 
-## 5. Custom event with details
+## 5. Custom event with structured details
 
 Trigger:
 
@@ -65,18 +76,21 @@ await TelegramReporter.sendCustomEvent(
     token: ...,
     chatID: ...,
     title: "Sync Failed",
-    details: ["reason": "timeout", "retry": "true"],
+    details: [
+        "reason": "timeout",
+        "retry": "true"
+    ],
     additional: ...
 )
 ```
 
 Behavior:
 
-- Details are sorted by key.
-- Multiline values are normalized to single-line text.
-- Includes `📋 Details:` section in message body.
+- Sorts keys alphabetically
+- Normalizes multi-line values into a single line
+- Adds `📋 Details:` only when the dictionary is not empty
 
-## 6. Custom event with optional image
+## 6. Custom event with an image attachment
 
 Trigger:
 
@@ -93,26 +107,44 @@ await TelegramReporter.sendCustomEvent(
 
 Behavior:
 
-- If image is valid, sends one `sendPhoto` request with caption text.
-- If image is missing/invalid, falls back to text-only `sendMessage`.
+- Accepts supported image formats
+- Uses Telegram `sendPhoto`
+- Sends image and formatted text as one Telegram message
 
-## 7. Feedback without image
+## 7. Custom event falls back to text-only delivery
+
+Trigger:
+
+- missing image file
+- unsupported file extension
+- file loading failure
+
+Behavior:
+
+- Does not drop the event
+- Falls back to `sendMessage`
+
+## 8. Feedback without image
 
 Trigger:
 
 ```swift
 try await TelegramReporter.sendFeedback(
-    token: ..., chatID: ..., additional: ..., text: "User feedback"
+    token: ...,
+    chatID: ...,
+    additional: ...,
+    text: "User feedback"
 )
 ```
 
 Behavior:
 
-- Sends `📝 Feedback` with same metadata layout as first-launch event.
-- Adds `💬 User text: ...` line.
-- Uses `sendMessage`.
+- Sends `📝 Feedback`
+- Reuses the first-launch metadata baseline
+- Appends `💬 User text: ...`
+- Uses `sendMessage`
 
-## 8. Feedback with image from URL/file
+## 9. Feedback with an image file URL
 
 Trigger:
 
@@ -128,89 +160,133 @@ try await TelegramReporter.sendFeedback(
 
 Behavior:
 
-- Supported formats: `png`, `heic`, `jpg`, `jpeg`.
-- Sends one Telegram message via `sendPhoto` + caption.
+- Supports `png`, `jpg`, `jpeg`, and `heic`
+- Uses Telegram `sendPhoto`
+- Sends the image and text as one message
 
-## 9. Feedback with image from iOS picker object
+## 10. Feedback with a picker-provided image
 
 Trigger:
 
 ```swift
-let pickerImage = FeedbackImage(data: data, fileName: "picker.heic", mimeType: "image/heic")
+let pickerImage = FeedbackImage(
+    data: data,
+    fileName: "feedback.heic",
+    mimeType: "image/heic"
+)
 
 try await TelegramReporter.sendFeedback(
     token: ...,
     chatID: ...,
     additional: ...,
-    text: "From picker",
+    text: "User feedback",
     feedbackImage: pickerImage
 )
 ```
 
 Behavior:
 
-- Uses picker image directly.
-- Sends one `sendPhoto` request with text as caption.
+- Uses the in-memory image directly
+- Avoids extra file loading
+- Sends one Telegram message with caption
 
-## 10. Feedback rejects empty text
-
-Trigger:
-
-- `text` is empty or whitespace-only.
-
-Behavior:
-
-- Throws `TelegramReporter.FeedbackError.emptyMessage`.
-- No network request is sent.
-
-## 11. Unsupported attachment format
+## 11. Feedback validation
 
 Trigger:
 
-- Attachment extension/mime is outside supported image list.
+- empty message
+- whitespace-only message
 
 Behavior:
 
-- Attachment is ignored.
-- Event is still sent as text-only message.
+- Throws `TelegramReporter.FeedbackError.emptyMessage`
+- Sends no network request
 
-## 12. Attachment read failure
+## 12. Unsupported image formats are ignored safely
 
 Trigger:
 
-- Image file URL is provided but cannot be read.
+- unsupported extensions such as `gif` or `bmp`
 
 Behavior:
 
-- Logs error.
-- Continues by sending message without image.
+- Logs the issue internally
+- Drops only the attachment
+- Preserves message delivery
 
-## 13. Telegram API non-2xx response
+## 13. File loading failure does not crash reporting
 
 Trigger:
 
-- API returns non-success status code.
+- broken file URL
+- missing file
+- read permission issue
 
 Behavior:
 
-- Internal transport throws server error.
-- Public API swallows error and logs it (no crash).
+- Logs the failure
+- Continues without media
 
-## 14. Non-HTTP transport response
+## 14. Server-side Telegram failures are swallowed by public API entry points
 
 Trigger:
 
-- URLSession returns non-HTTP response.
+- Telegram returns a non-2xx response
 
 Behavior:
 
-- Internal transport throws invalid-response error.
-- Public API logs and swallows in reporter entrypoints.
+- Internal transport throws an error
+- Public entry points log the failure and avoid crashing the app
 
-## 15. Hashtag generation
+## 15. Invalid non-HTTP responses are handled safely
+
+Trigger:
+
+- URL loading stack returns a non-HTTP response
 
 Behavior:
 
-- Every message appends hashtag based on app name: `#<normalizedappname>`.
-- Non-alphanumeric symbols are removed.
+- Internal transport throws `invalidResponse`
+- Public entry points log and swallow the failure
 
+## 16. Stable metadata block
+
+Every message contains:
+
+- `📱 App`
+- `📦 Version`
+- `🚚 Source`
+- `📲 Device`
+- `🧠 OS`
+- `🌍 Locale`
+- `🗺️ Region`
+
+This baseline is shared across:
+
+- first launch
+- app active
+- custom events
+- feedback
+
+## 17. Stable hashtag generation
+
+Every message ends with:
+
+- `#<normalized-app-name>`
+
+Behavior:
+
+- lowercases the app name
+- removes non-alphanumeric separators
+- falls back to `#unknownapp` when necessary
+
+## 18. Demo app validation coverage
+
+The repository also includes an iOS demo app that supports:
+
+- first-launch flow validation
+- custom-event flow validation
+- feedback validation
+- attachment validation
+- English and Ukrainian localization review
+- unit-test validation through a shared Xcode test plan
