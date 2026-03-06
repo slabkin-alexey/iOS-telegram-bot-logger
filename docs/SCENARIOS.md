@@ -1,6 +1,6 @@
 # All Supported Scenarios
 
-This page documents the supported runtime behavior of TelegramReporter `1.1`.
+This page documents the supported runtime behavior of TelegramReporter `1.1.1`.
 
 ## 1. First-launch report is sent once per account identity
 

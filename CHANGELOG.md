@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.1
+
+### Fixed
+
+- Removed tracked generated artifacts (`.build`, `.swiftpm`, `.DS_Store`) from version control to keep the package repository clean for downstream consumers.
+- Published a clean semantic version tag `1.1.1` that points to the artifact-free release state.
+
 ## 1.1
 
 ### Added

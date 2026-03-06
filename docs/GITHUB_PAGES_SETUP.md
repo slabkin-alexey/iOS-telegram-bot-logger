@@ -36,7 +36,7 @@ The published documentation should make it easy for a new consumer to understand
 - what TelegramReporter does,
 - which services it integrates with,
 - which platforms it supports,
-- how to install release `1.1`,
+- how to install release `1.1.1`,
 - how first-launch, custom event, and feedback delivery work,
 - how attachments are handled,
 - how the internal architecture is organized,
@@ -58,7 +58,7 @@ The published documentation should make it easy for a new consumer to understand
 After every release push:
 
 1. Open the published Pages URL
-2. Confirm the visible release number is `1.1`
+2. Confirm the visible release number is `1.1.1`
 3. Verify links between overview, scenarios, architecture, and setup pages
 4. Verify installation snippets reference the latest semantic version
 5. Verify code blocks render correctly on the published site

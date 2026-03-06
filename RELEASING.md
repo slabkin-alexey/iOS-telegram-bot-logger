@@ -2,7 +2,7 @@
 
 TelegramReporter is distributed as a Swift Package Manager dependency through annotated git tags.
 
-Release `1.1` is intended to be consumed as a semantic version, not as a floating branch reference.
+Release `1.1.1` is intended to be consumed as a semantic version, not as a floating branch reference.
 
 ## Release Checklist
 
@@ -18,10 +18,10 @@ xcodebuild test \
   -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
   CODE_SIGNING_ALLOWED=NO
 git add -A
-git commit -m "release: 1.1"
-git tag -a 1.1 -m "Release 1.1"
+git commit -m "release: 1.1.1"
+git tag -a 1.1.1 -m "Release 1.1.1"
 git push origin main
-git push origin 1.1
+git push origin 1.1.1
 ```
 
 ## Post-Push Validation
@@ -45,7 +45,7 @@ Recommended:
 ```swift
 .package(
     url: "https://github.com/slabkin-alexey/iOS-telegram-bot-logger.git",
-    from: "1.1"
+    from: "1.1.1"
 )
 ```
 
@@ -54,7 +54,7 @@ Exact pin:
 ```swift
 .package(
     url: "https://github.com/slabkin-alexey/iOS-telegram-bot-logger.git",
-    exact: "1.1"
+    exact: "1.1.1"
 )
 ```
 
@@ -62,7 +62,7 @@ Exact pin:
 
 After pushing `main`, confirm that GitHub Pages rebuilds from `/docs` and that the published documentation reflects:
 
-- release `1.1`,
+- release `1.1.1`,
 - the current installation snippet,
 - the current supported scenarios,
 - the current architecture layout,

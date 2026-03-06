@@ -1,6 +1,6 @@
 # Architecture
 
-TelegramReporter `1.1` uses a lightweight MVVM-oriented internal architecture with explicit separation between public API, domain models, message composition, orchestration, and low-level infrastructure.
+TelegramReporter `1.1.1` uses a lightweight MVVM-oriented internal architecture with explicit separation between public API, domain models, message composition, orchestration, and low-level infrastructure.
 
 The package does not render UI. In this design, the "view" is the final Telegram-ready message text plus the optional attachment payload.
 
@@ -93,7 +93,7 @@ This keeps the package safe for SwiftUI or UIKit flows that trigger reporting fr
 
 ## Refactor Safety Goals
 
-The `1.1` refactor keeps the following guarantees:
+The `1.1.1` refactor keeps the following guarantees:
 
 - no intentional business-logic changes,
 - stable public API,

@@ -2,7 +2,7 @@
 
 TelegramReporter is a Swift Package for routing app events and user feedback into Telegram with structured metadata, stable formatting, and semantic-versioned distribution.
 
-Current documented release: `1.1`
+Current documented release: `1.1.1`
 
 ## Product Overview
 
@@ -46,7 +46,7 @@ The package focuses on predictable output, lightweight integration, and safe run
 ```swift
 .package(
     url: "https://github.com/slabkin-alexey/iOS-telegram-bot-logger.git",
-    from: "1.1"
+    from: "1.1.1"
 )
 ```
 
