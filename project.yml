@@ -26,8 +26,8 @@ targets:
       path: Config/TelegramReporter-Info.plist
       properties:
         CFBundleDevelopmentRegion: en
-        CFBundleShortVersionString: "1.1"
-        CFBundleVersion: "1.1"
+        CFBundleShortVersionString: "2.0"
+        CFBundleVersion: "2.0"
 
   TelegramReporterDemo:
     type: application
@@ -50,8 +50,8 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDevelopmentRegion: en
         INFOPLIST_KEY_CFBundleDisplayName: TelegramReporter Demo
-        INFOPLIST_KEY_CFBundleShortVersionString: "1.1"
-        INFOPLIST_KEY_CFBundleVersion: "1.1"
+        INFOPLIST_KEY_CFBundleShortVersionString: "2.0"
+        INFOPLIST_KEY_CFBundleVersion: "2.0"
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
 

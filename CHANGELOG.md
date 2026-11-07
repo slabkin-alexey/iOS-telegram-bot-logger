@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0
+
+### Added
+
+- Expanded `DeviceModelCatalog` to cover the full range of Apple hardware identifiers from AppleDB: all iPhone, iPad, Mac (MacBook/MacBook Air/MacBook Pro, iMac, Mac mini, Mac Studio, Mac Pro), Apple TV, and iPod touch models, including the latest iPhone, MacBook, and iPad mini releases.
+
 ## 1.1.1
 
 ### Fixed
