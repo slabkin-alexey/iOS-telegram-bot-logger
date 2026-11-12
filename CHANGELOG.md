@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.1
+
+### Fixed
+
+- Replaced force-unwrapped Telegram API URLs with a thrown `invalidURL` transport error, so a malformed bot token can no longer crash the host app.
+
+### Changed
+
+- `ReporterLogger` is compiled out of Release builds and builds its messages lazily, removing console output and string-building overhead in production.
+
 ## 2.0
 
 ### Added

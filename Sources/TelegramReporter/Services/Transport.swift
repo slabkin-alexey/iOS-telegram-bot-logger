@@ -4,8 +4,12 @@ enum Transport {
     typealias Attachment = TransportAttachment
     typealias TransportError = TelegramTransportError
 
-    private static let sendMessageEndpoint = "https://api.telegram.org/bot%@/sendMessage"
-    private static let sendPhotoEndpoint = "https://api.telegram.org/bot%@/sendPhoto"
+    private static func endpoint(_ method: String, token: String) throws -> URL {
+        guard let url = URL(string: "https://api.telegram.org/bot\(token)/\(method)") else {
+            throw TransportError.invalidURL
+        }
+        return url
+    }
 
     static func send(_ text: String, using cfg: Config, attachment: Attachment? = nil) async throws {
         if let attachment {
@@ -14,7 +18,7 @@ enum Transport {
         }
 
         ReporterLogger.log("Transport.send", "Creating message request for chatID=\(cfg.chatID), textLength=\(text.count)")
-        let url = URL(string: String(format: sendMessageEndpoint, cfg.token))!
+        let url = try endpoint("sendMessage", token: cfg.token)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -35,7 +39,7 @@ enum Transport {
             "Transport.sendPhoto",
             "Creating photo request for chatID=\(cfg.chatID), captionLength=\(text.count), fileName=\(attachment.fileName), mimeType=\(attachment.mimeType), fileSize=\(attachment.data.count)"
         )
-        let url = URL(string: String(format: sendPhotoEndpoint, cfg.token))!
+        let url = try endpoint("sendPhoto", token: cfg.token)
         let boundary = "Boundary-\(UUID().uuidString)"
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

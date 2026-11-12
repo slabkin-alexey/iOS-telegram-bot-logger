@@ -4,7 +4,7 @@ TelegramReporter is a production-oriented Swift Package for sending structured o
 
 It is built for teams that want a lightweight reporting pipeline without introducing a dedicated backend just to capture support messages, QA events, first-launch traces, or optional screenshot attachments.
 
-Current release: `2.0`
+Current release: `2.0.1`
 
 ## Why This Package Exists
 
@@ -55,7 +55,7 @@ Recommended semantic-version integration:
 ```swift
 .package(
     url: "https://github.com/slabkin-alexey/iOS-telegram-bot-logger.git",
-    from: "2.0"
+    from: "2.0.1"
 )
 ```
 
@@ -64,7 +64,7 @@ If you need to pin the package exactly:
 ```swift
 .package(
     url: "https://github.com/slabkin-alexey/iOS-telegram-bot-logger.git",
-    exact: "2.0"
+    exact: "2.0.1"
 )
 ```
 
@@ -209,7 +209,7 @@ Behavior:
 
 ## Architecture
 
-TelegramReporter `2.0` uses a lightweight MVVM-oriented internal structure:
+TelegramReporter `2.0.1` uses a lightweight MVVM-oriented internal structure:
 
 - `Public`
 - `Models`

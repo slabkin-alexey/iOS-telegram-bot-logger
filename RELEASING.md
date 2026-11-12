@@ -2,7 +2,7 @@
 
 TelegramReporter is distributed as a Swift Package Manager dependency through annotated git tags.
 
-Release `2.0` is intended to be consumed as a semantic version, not as a floating branch reference.
+Release `2.0.1` is intended to be consumed as a semantic version, not as a floating branch reference.
 
 ## Release Checklist
 
@@ -18,10 +18,10 @@ xcodebuild test \
   -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
   CODE_SIGNING_ALLOWED=NO
 git add -A
-git commit -m "release: 2.0"
-git tag -a 2.0 -m "Release 2.0"
+git commit -m "release: 2.0.1"
+git tag -a 2.0.1 -m "Release 2.0.1"
 git push origin main
-git push origin 2.0
+git push origin 2.0.1
 ```
 
 ## Post-Push Validation
@@ -29,13 +29,13 @@ git push origin 2.0
 Verify the local tag:
 
 ```bash
-git tag --list | rg "^1\\.1\\.1$"
+git tag --list | rg "^2\\.0\\.1$"
 ```
 
 Verify the remote tag:
 
 ```bash
-git ls-remote --tags origin | rg "refs/tags/1\\.1\\.1"
+git ls-remote --tags origin | rg "refs/tags/2\\.0\\.1"
 ```
 
 ## Consumer Installation
@@ -45,7 +45,7 @@ Recommended:
 ```swift
 .package(
     url: "https://github.com/slabkin-alexey/iOS-telegram-bot-logger.git",
-    from: "2.0"
+    from: "2.0.1"
 )
 ```
 
@@ -54,7 +54,7 @@ Exact pin:
 ```swift
 .package(
     url: "https://github.com/slabkin-alexey/iOS-telegram-bot-logger.git",
-    exact: "2.0"
+    exact: "2.0.1"
 )
 ```
 
@@ -62,7 +62,7 @@ Exact pin:
 
 After pushing `main`, confirm that GitHub Pages rebuilds from `/docs` and that the published documentation reflects:
 
-- release `2.0`,
+- release `2.0.1`,
 - the current installation snippet,
 - the current supported scenarios,
 - the current architecture layout,
