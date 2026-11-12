@@ -12,5 +12,9 @@ final class TelegramReporterEventTests: XCTestCase {
         XCTAssertEqual(active.logName, "appDidBecomeActive")
         XCTAssertEqual(custom.logName, "custom(title: Sync, detailsCount: 1)")
         XCTAssertEqual(feedback.logName, "feedback(textLength: 5, hasImage: true)")
+        XCTAssertEqual(
+            TelegramReporterEvent.purchaseSuccess(product: "Pro", amount: 1, currency: "USD", details: ["a": "b"]).logName,
+            "purchaseSuccess(product: Pro, hasAmount: true, detailsCount: 1)"
+        )
     }
 }

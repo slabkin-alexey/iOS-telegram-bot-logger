@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1
+
+### Added
+
+- New `🎉 Purchase Successful` event and public API `TelegramReporter.sendPurchaseSuccess(token:chatID:additional:product:amount:currency:details:)`.
+
 ## 2.0.1
 
 ### Fixed

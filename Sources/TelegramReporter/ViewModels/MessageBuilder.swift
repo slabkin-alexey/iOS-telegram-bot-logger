@@ -34,6 +34,17 @@ enum MessageBuilder {
                 \(detailsText.isEmpty ? "" : "\n📋 Details:\n" + detailsText)
                 """)
 
+        case .purchaseSuccess(let product, let amount, let currency, let details):
+            let detailsText = formatDetails(details)
+            let priceLine = formatAmount(amount, currency: currency).map { "\n💰 Amount: \($0)" } ?? ""
+
+            message = withAppTag("""
+                🎉 Purchase Successful
+                \(commonMeta(additional: additional))
+
+                🛒 Product: \(product)\(priceLine)\(detailsText.isEmpty ? "" : "\n\n📋 Details:\n" + detailsText)
+                """)
+
         case .feedback(let text, _):
             message = withAppTag("""
                 📝 Feedback
@@ -176,6 +187,19 @@ enum MessageBuilder {
 
     private static var deviceModelName: String {
         DeviceModelResolver.currentModelName
+    }
+
+    static func formatAmount(_ amount: Decimal?, currency: String?) -> String? {
+        guard let amount else { return nil }
+        let formatter = NumberFormatter()
+        formatter.locale = englishLocale
+        formatter.numberStyle = .decimal
+        formatter.usesGroupingSeparator = false
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        let number = formatter.string(from: amount as NSDecimalNumber) ?? "\(amount)"
+        let code = currency?.trimmingCharacters(in: .whitespacesAndNewlines).uppercased() ?? ""
+        return code.isEmpty ? number : "\(number) \(code)"
     }
 
     private static func formatDetails(_ details: [String: String]) -> String {

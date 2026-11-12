@@ -43,6 +43,26 @@ final class MessageBuilderTests: XCTestCase {
         XCTAssertFalse(message.contains("📋 Details:"))
     }
 
+    func testPurchaseSuccessIncludesProductPriceAndDetails() {
+        let message = MessageBuilder.build(
+            .purchaseSuccess(product: "Pro Yearly", amount: Decimal(string: "29.99")!, currency: "usd", details: ["plan": "yearly"]),
+            additional: "QA"
+        )
+
+        XCTAssertTrue(message.contains("🎉 Purchase Successful"))
+        XCTAssertTrue(message.contains("🛒 Product: Pro Yearly"))
+        XCTAssertTrue(message.contains("💰 Amount: 29.99 USD"))
+        XCTAssertTrue(message.contains("• plan: yearly"))
+    }
+
+    func testPurchaseSuccessWithoutPriceOrDetailsOmitsThem() {
+        let message = MessageBuilder.build(.purchaseSuccess(product: "Pro"), additional: "")
+
+        XCTAssertTrue(message.contains("🛒 Product: Pro"))
+        XCTAssertFalse(message.contains("💰 Amount:"))
+        XCTAssertFalse(message.contains("📋 Details:"))
+    }
+
     func testFeedbackEventIncludesFeedbackLineAndCommonMetadata() {
         let message = MessageBuilder.build(.feedback(text: "App crashed on save"), additional: "QA")
 

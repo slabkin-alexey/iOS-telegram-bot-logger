@@ -39,6 +39,29 @@ public enum TelegramReporter {
         await report(.custom(title: title, details: details), token: token, chatID: chatID, additional: additional, attachment: attachment)
     }
 
+    /// Sends a "Purchase Successful" event. Call it after a purchase/subscription is verified.
+    /// - Parameters:
+    ///   - product: Product or plan name (e.g. "Pro Yearly").
+    ///   - amount: Optional purchase amount (e.g. 29.99).
+    ///   - currency: Optional ISO currency code (e.g. "USD").
+    ///   - details: Optional extra key/value pairs, sorted alphabetically in the message.
+    public static func sendPurchaseSuccess(
+        token: String,
+        chatID: String,
+        additional: String,
+        product: String,
+        amount: Decimal? = nil,
+        currency: String? = nil,
+        details: [String: String] = [:]
+    ) async {
+        await report(
+            .purchaseSuccess(product: product, amount: amount, currency: currency, details: details),
+            token: token,
+            chatID: chatID,
+            additional: additional
+        )
+    }
+
     /// Sends feedback event with the same base metadata as startLogReport plus user text.
     /// Optionally attaches an image with extension: png, heic, jpeg, jpg.
     public static func sendFeedback(

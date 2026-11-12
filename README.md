@@ -4,7 +4,7 @@ TelegramReporter is a production-oriented Swift Package for sending structured o
 
 It is built for teams that want a lightweight reporting pipeline without introducing a dedicated backend just to capture support messages, QA events, first-launch traces, or optional screenshot attachments.
 
-Current release: `2.0.1`
+Current release: `2.1`
 
 ## Why This Package Exists
 
@@ -23,6 +23,7 @@ TelegramReporter packages that flow into a small Swift API with deterministic me
 - One-time `✅ First Launch` reporting per account-scoped install identity
 - `▶️ App Became Active` reporting
 - Custom event delivery with stable alphabetical detail ordering
+- `🎉 Purchase Successful` reporting with product, optional amount/currency and details
 - Feedback delivery with the same metadata block used by first-launch reporting
 - Optional `png`, `jpg`, `jpeg`, and `heic` image delivery
 - Single-message Telegram delivery for text plus image via `sendPhoto` caption flow
@@ -55,7 +56,7 @@ Recommended semantic-version integration:
 ```swift
 .package(
     url: "https://github.com/slabkin-alexey/iOS-telegram-bot-logger.git",
-    from: "2.0.1"
+    from: "2.1"
 )
 ```
 
@@ -64,7 +65,7 @@ If you need to pin the package exactly:
 ```swift
 .package(
     url: "https://github.com/slabkin-alexey/iOS-telegram-bot-logger.git",
-    exact: "2.0.1"
+    exact: "2.1"
 )
 ```
 
@@ -129,6 +130,43 @@ await TelegramReporter.sendCustomEvent(
     additional: TelegramBotConfig.appTag,
     imageFileURL: imageURL
 )
+```
+
+### Purchase success reporting
+
+```swift
+await TelegramReporter.sendPurchaseSuccess(
+    token: TelegramBotConfig.token,
+    chatID: TelegramBotConfig.chatID,
+    additional: TelegramBotConfig.appTag,
+    product: "Pro Yearly",
+    amount: 29.99,                   // optional, Decimal
+    currency: "USD",                 // optional, ISO code
+    details: ["plan": "yearly"]      // optional
+)
+```
+
+Call it after the purchase or subscription is verified (for example, after a successful StoreKit 2 `Transaction` check, before `transaction.finish()`).
+
+Parameters:
+
+- `token`, `chatID`, `additional` — same as every other call.
+- `product` — product or plan name shown in the message.
+- `amount` — optional purchase amount (`Decimal`, up to 2 decimals shown).
+- `currency` — optional ISO currency code, printed uppercase after the amount.
+- `details` — optional key/value pairs, printed alphabetically under `📋 Details:`.
+
+The call never throws and does not block the UI; delivery errors are only logged. Resulting message:
+
+```
+🎉 Purchase Successful
+<common metadata>
+
+🛒 Product: Pro Yearly
+💰 Amount: 29.99 USD
+
+📋 Details:
+• plan: yearly
 ```
 
 ### Feedback reporting
@@ -209,7 +247,7 @@ Behavior:
 
 ## Architecture
 
-TelegramReporter `2.0.1` uses a lightweight MVVM-oriented internal structure:
+TelegramReporter `2.1` uses a lightweight MVVM-oriented internal structure:
 
 - `Public`
 - `Models`
